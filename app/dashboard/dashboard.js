@@ -107,7 +107,7 @@ angular.module('dashboard').controller('DashboardCtrl', ["$scope", "$rootScope",
 		if($rootScope.user && $rootScope.user.anon){
 			$rootScope.activityType = "global-timeline";
 			try{
-				$interval.cancel(getActivityInterval);
+				// $interval.cancel(getActivityInterval);
 			}
 			catch(e){}
 		}
@@ -119,7 +119,7 @@ angular.module('dashboard').controller('DashboardCtrl', ["$scope", "$rootScope",
 				$rootScope.activityType = "global-timeline";
 			}
 			try{
-				$interval.cancel(getActivityInterval);
+				// $interval.cancel(getActivityInterval);
 			}
 			catch(e){}
 		}
