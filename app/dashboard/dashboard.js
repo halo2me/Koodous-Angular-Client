@@ -3,10 +3,10 @@ angular.module('dashboard', []);
 angular.module('dashboard').controller('DashboardCtrl', ["$scope", "$rootScope", "api", "$interval", "$location", "$timeout", function($scope, $rootScope, api, $interval, $location, $timeout) {
 	$rootScope.section = "dashboard";
 	$rootScope.activityType = "user-timeline";
-	$rootScope.totalAPKDetected = window.totalAPKDetected;
-	$rootScope.last24hApks = window.last24hUploads;
-	$rootScope.totalAPKs = window.totalAPKs;
-	$rootScope.totalSocialRulesets = window.totalSocialRulesets;
+	// $rootScope.totalAPKDetected = window.totalAPKDetected;
+	// $rootScope.last24hApks = window.last24hUploads;
+	// $rootScope.totalAPKs = window.totalAPKs;
+	// $rootScope.totalSocialRulesets = window.totalSocialRulesets;
 	$rootScope.activity_loading = true;
 
 	//Total APKs últimas 24h
