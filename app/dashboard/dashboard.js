@@ -36,7 +36,7 @@ angular.module('dashboard').controller('DashboardCtrl', ["$scope", "$rootScope",
 		});
 
 		//Social rulesets
-		api.getPublicRulesets(1, false, {social:true}).success(function(response){
+		api.getPublicRulesets(1, false, {social:"True"}).success(function(response){
 			$rootScope.totalSocialRulesets = response.count;
 		});
 
