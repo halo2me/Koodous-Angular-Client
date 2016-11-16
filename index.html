@@ -14,7 +14,10 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.css">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.css">
     
-    <link rel="stylesheet" href="compiled/styles.min.css">
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/codemirror.css">
+    <link rel="stylesheet" href="assets/css/loading-bar.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -34,10 +37,11 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
+    <script src="assets/js/codemirror.js"></script>
+    <script src="assets/js/codemirror_yara.js"></script>
+    <script src="assets/js/moment-with-locales.js"></script>
+    <script src="assets/js/qrcode.min.js"></script>
     <script src="assets/js/sha256.js"></script>
-
-    <!-- Libraries -->
-    <script src="compiled/assets.min.js"></script>
 
     <!-- Angular -->
     <script charset="utf-8" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js?"></script>
@@ -46,12 +50,35 @@
     <script charset="utf-8" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js"></script>
     <script charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/favico.js/0.3.7/favico.min.js"></script>
     <script charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.js"></script>
-
-    <!-- Angular assets -->
-    <script src="compiled/angular-assets.min.js"></script>
+    <script src="assets/js/ui-codemirror.js"></script>
+    <script src="assets/js/ui-bootstrap.min.js"></script>
+    <script src="assets/js/angular-qr.min.js"></script>
+    <script src="assets/js/angular-ui-router.min.js"></script>
+    <script src="assets/js/angular-file-upload-all.min.js"></script>
+    <script src="assets/js/angular-moment.min.js"></script>
+    <script src="assets/js/mentio.min.js"></script>
 
     <!-- App -->
-    <script src="compiled/app.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/config.js"></script>
+    <script src="app/routers.js"></script>
+    <script src="app/common/directives/comment.js"></script>
+    <script src="app/common/directives/user_widget.js"></script>
+    <script src="app/common/directives/analyst_timeline.js"></script>
+    <script src="app/common/directives/add_comment_widget.js"></script>
+    <script src="app/common/filters/filters.js"></script>
+    <script src="app/common/services/api.js"></script>
+    <script src="app/analysts/analysts.js"></script>
+    <script src="app/apks/apks.js"></script>
+    <script src="app/dashboard/dashboard.js"></script>
+    <script src="app/my_rulesets/rulesets.js"></script>
+    <script src="app/notifications/notifications.js"></script>
+    <script src="app/ranking/ranking.js"></script>
+    <script src="app/register/register.js"></script>
+    <script src="app/rulesets/rulesets.js"></script>
+    <script src="app/settings/settings.js"></script>
+    <script src="app/signinup/signinup.js"></script>
+
 </head>
 
 <body class="layout-fixed admin-elements-page sb-l-o sb-r-c onload-check" ng-class="{ 'layout-fixed' : app.layout.isFixed, 'sb-l-m' : app.layout.isCollapsed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'aside-toggled':app.layout.asideToggled }" ng-controller="AppCtrl">
