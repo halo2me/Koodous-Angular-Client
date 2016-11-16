@@ -1,6 +1,13 @@
 angular.module('dashboard', []);
 
 angular.module('dashboard').controller('DashboardCtrl', ["$scope", "$rootScope", "api", "$interval", "$location", "$timeout", function($scope, $rootScope, api, $interval, $location, $timeout) {
+
+	function pad(n, width, z) {
+		z = z || '0';
+		n = n + '';
+		return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+	}
+
 	$rootScope.section = "dashboard";
 	$rootScope.activityType = "user-timeline";
 	// $rootScope.totalAPKDetected = window.totalAPKDetected;
@@ -23,7 +30,7 @@ angular.module('dashboard').controller('DashboardCtrl', ["$scope", "$rootScope",
 		var year = dateObj.getUTCFullYear();
 		var hours = dateObj.getUTCHours();
 		var minutes = dateObj.getUTCMinutes();
-		last_day = year + "-" + month + "-" + day +"T"+ hours + ":" + minutes + ":00";
+		last_day = year + "-" + pad(month, 2) + "-" + pad(day, 2) +"T"+ pad(hours, 2) + ":" + pad(minutes, 2) + ":00";
 
 		//Last 24 hours uploads
 		api.getAPKs(false, {search:"created_on:["+last_day+" TO *]"}).success(function(response){
