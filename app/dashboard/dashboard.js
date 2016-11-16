@@ -16,6 +16,30 @@ angular.module('dashboard').controller('DashboardCtrl', ["$scope", "$rootScope",
 
 	//Timeline
 	$scope.getActivity = function(){
+		var dateObj = new Date();
+		dateObj.setDate(dateObj.getDate()-1);
+		var month = dateObj.getUTCMonth() + 1; //months from 1-12
+		var day = dateObj.getUTCDate();
+		var year = dateObj.getUTCFullYear();
+		var hours = dateObj.getUTCHours();
+		var minutes = dateObj.getUTCMinutes();
+		last_day = year + "-" + month + "-" + day +"T"+ hours + ":" + minutes + ":00";
+
+		//Last 24 hours uploads
+		api.getAPKs(false, {search:"created_on:["+last_day+" TO *]"}).success(function(response){
+			$rootScope.last24hApks = response.count;
+		});
+
+		//Detections
+		api.getAPKs(false, {search:"detected:true"}).success(function(response){
+			$rootScope.totalAPKDetected = response.count;
+		});
+
+		//Social rulesets
+		api.getPublicRulesets(1, false, {social:true}).success(function(response){
+			$rootScope.totalSocialRulesets = response.count;
+		});
+
 		function getGlobalActivity(){
 			$scope.activity_loading = true;
 			api.getGlobalActivity().success(function(response){
@@ -65,12 +89,12 @@ angular.module('dashboard').controller('DashboardCtrl', ["$scope", "$rootScope",
 		$interval.cancel(getActivityInterval);
 	});
 	//Cancel interval after 5 minutes
-	$timeout(function(){
-		try{
-			$interval.cancel(getActivityInterval);
-		}
-		catch(e){}
-	}, 300000);
+	// $timeout(function(){
+	// 	try{
+	// 		$interval.cancel(getActivityInterval);
+	// 	}
+	// 	catch(e){}
+	// }, 300000);
 
 	$rootScope.$watch("user", function(newValue, oldValue){
 		if($rootScope.user && $rootScope.user.anon){
@@ -111,6 +135,7 @@ angular.module('dashboard').controller('LastApksCtrl', ["$scope", "$rootScope", 
 		$scope.loading = true;
 		api.getAPKs().success(function(data){
 			$scope.apks = data.results.slice(0,8);
+			$rootScope.totalAPKs = data.count;
 		}).finally(function(){
 			$scope.loading = false;
 		});
@@ -120,12 +145,12 @@ angular.module('dashboard').controller('LastApksCtrl', ["$scope", "$rootScope", 
 		$interval.cancel(latestApksInterval);
 	});
 	//Cancel interval after 5 minutes
-	$timeout(function(){
-		try{
-			$interval.cancel(latestApksInterval);
-		}
-		catch(e){}
-	}, 300000);
+	// $timeout(function(){
+	// 	try{
+	// 		$interval.cancel(latestApksInterval);
+	// 	}
+	// 	catch(e){}
+	// }, 300000);
 	$rootScope.$watch("user", function(){
 		if($rootScope.user && $rootScope.user.anon){
 			$rootScope.activityType = "global-timeline";
