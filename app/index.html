@@ -1,0 +1,21 @@
+<div class="row frontpage">
+	<h1 style="text-align:center; font-size:63px;">White mirlo!</h1>
+	<div ng-file-drop="" ng-model="file" class="well col-md-6 col-md-offset-3" drag-over-class="{accept:'dragover', reject:'dragover-err', delay:100}" allow-dir="true" ng-file-change="upload(file)" style="border-style:dashed; border-width:3px; text-align:center;" ng-hide="uploading">
+		<button class="btn btn-primary btn-lg" ng-file-select ng-file-model="file" ng-file-change="upload(file)">
+			<i class="fa fa-cloud-upload fa-5x"></i>
+		</button>
+		<div>
+			Drop APKs here
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<div class="row" ng-show="uploading">
+	<div class="col-md-6 col-md-offset-3">
+		<h1 style="text-align:center;">Uploading file...</h1>
+	</div>
+	<div class="col-md-6 col-md-offset-3">
+		<progressbar class="progress-striped active" value="uploadProgress" type="success"></progressbar>
+	</div>
+</div>

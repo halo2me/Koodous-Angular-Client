@@ -1,0 +1,130 @@
+<!-- START Sidebar (left) -->
+<div class="aside-inner" ng-controller="SidebarCtrl">
+   <nav sidebar="" class="sidebar">
+      <!-- START sidebar nav-->
+      <ul class="nav">
+         <li class="has-user-block hidden-xs" ng-show="$root.user.username">
+            <div style="height: auto;">
+               <div class="item user-block">
+                  <!-- User picture-->
+                  <div class="user-block-picture">
+                     <a href="/analysts/{{ $root.user.username }}" class="user-block-status">
+                        <img ng-src="{{ $root.user.avatar_url }}" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle">
+                     </a>
+                  </div>
+                  <!-- Name and Job-->
+                  <div class="user-block-info">
+                     <span class="user-block-name">{{ $root.user.username }}</span>
+                     <span class="user-block-role" ng-show="$root.user.occupation">{{ $root.user.occupation }}</span>
+                  </div>
+               </div>
+            </div>
+         </li>
+         <li class="nav-heading">
+            <span>Menu</span>
+         </li>
+         <li ng-class="{'active': $root.section == 'dashboard'}">
+            <a title="Dashboard" href="/">
+               <em class="fa fa-dashboard"></em>
+               <span>Dashboard</span>
+            </a>
+         </li>
+         <li ng-class="{'active': $root.section == 'rulesets'}" ng-init="$root.rulesets_shown = false;" class="rulesets-menu" ng-show="$root.user.username">
+            <a title="Rulesets" ng-href="" ng-click="$root.rulesets_shown = !$root.rulesets_shown;">
+               <em class="fa fa-code"></em>
+               <span>
+                  Rulesets
+                  <i class="fa fa-angle-right fa-fw pull-right" style="margin-top:2px;" ng-hide="$root.rulesets_shown"></i>
+                  <i class="fa fa-angle-down fa-fw pull-right" style="margin-top:2px;" ng-show="$root.rulesets_shown"></i>
+               </span>
+            </a>
+            <ul class="nav sidebar-subnav" collapse="!$root.rulesets_shown">
+               <li class="sidebar-subvan-header" ng-class="{'active': $root.sidebar_sub_section == 'community_rulesets'}">
+                  <a href="/rulesets">Community Rulesets</a>
+               </li>
+               <li class="sidebar-subvan-header" ng-class="{'active': $root.sidebar_sub_section == 'my_rulesets', 'disabled':$root.user.anon}">
+                  <a href="/my_rulesets">My Rulesets</a>
+               </li>
+            </ul>
+         </li>
+         <li ng-class="{'active': $root.section == 'rulesets'}" ng-show="$root.user.anon">
+            <a href="/rulesets">
+               <em class="fa fa-code"></em>
+               <span>Community Rulesets</span>
+            </a>
+         </li>
+
+         <li ng-class="{'active': $root.section == 'apks'}">
+            <a title="APKs" href="/apks">
+               <em class="fa fa-list"></em>
+               <span>APKs</span>
+            </a>
+         </li>
+         <li ng-class="{'active': $root.section == 'ranking'}">
+            <a title="Ranking" href="/ranking">
+               <em class="fa fa-trophy"></em>
+               <span>Ranking</span>
+            </a>
+         </li>
+         <li ng-class="{'active': $root.section == 'notifications'}" ng-show="$root.user.username">
+            <a title="Notifications" href="/notifications">
+               <em class="fa fa-exclamation-circle"></em>
+               <span>Notifications</span>
+               <div class="label label-danger pull-right" ng-show="$root.unreadNotifications != 0">{{ $root.unreadNotifications }}</div>
+            </a>
+         </li>
+         <li>
+            <hr>
+         </li>
+         <li class="nav-heading">
+            <span>Links</span>
+         </li>
+         <li ng-class="{'active': $root.section == 'about'}">
+            <a title="About" href="/about">
+               <em class="fa fa-info-circle"></em>
+               <span>About Koodous</span>
+            </a>
+         </li>
+         <li ng-class="{'active': $root.section == 'press'}">
+            <a title="Press" href="/press">
+               <em class="fa fa-newspaper-o"></em>
+               <span>Press</span>
+            </a>
+         </li>
+         <li>
+            <a title="Documentation" href="http://docs.koodous.com" target="_blank">
+               <em class="fa fa-book"></em>
+               <span>Documentation</span>
+            </a>
+         </li>
+         <li>
+            <a title="Twitter" href="http://twitter.com/koodous_project" target="_blank">
+               <em class="fa fa-twitter"></em>
+               <span>Twitter</span>
+            </a>
+         </li>
+         <li>
+            <a title="Blog" href="http://blog.koodous.com" target="_blank">
+               <em class="fa fa-bookmark"></em>
+               <span>Blog</span>
+            </a>
+         </li>
+         <li>
+            <a title="Blog" href="mailto:info@koodous.com">
+               <em class="fa fa-envelope"></em>
+               <span>info@koodous.com</span>
+            </a>
+         </li>
+      </ul>
+      <!-- END sidebar nav-->
+   </nav>
+</div>
+<ul class="nav sidebar-subnav nav-floating rulesets-sub-menu">
+   <li class="sidebar-subvan-header" ng-class="{'active': $root.sidebar_sub_section == 'community_rulesets'}">
+      <a href="/rulesets">Community Rulesets</a>
+   </li>
+   <li class="sidebar-subvan-header" ng-class="{'active': $root.sidebar_sub_section == 'my_rulesets','disabled':$root.user.anon}">
+      <a href="/my_rulesets">My Rulesets</a>
+   </li>
+</ul>
+<!-- END Sidebar (left)

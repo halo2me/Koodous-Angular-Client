@@ -1,0 +1,25 @@
+<div class="col-md-12">
+	<div class="list-group" style="margin-top: 10px;">
+		<!-- ngRepeat: comment in lastComments -->
+		<a href="{{ getRefLink(comment) }}" class="list-group-item ng-scope mt" ng-repeat="comment in comments">
+			<div class="media">
+				<div class="pull-left">
+					<img ng-src="{{ comment.author.avatar_url }}" alt="Image" class="media-object img-circle thumb32">
+				</div>
+				<div class="media-body clearfix">
+					<small class="pull-right ng-binding">{{ comment.created_on*1000|date:"medium" }}</small>
+					<strong class="media-heading text-primary ng-binding">
+						{{ comment.author.username }}
+					</strong>
+					<p class="mb-sm">
+						<small class="ng-binding">{{ comment.text }}</small>
+					</p>
+				</div>
+			</div>
+		</a><!-- end ngRepeat: comment in lastComments -->
+	</div>
+</div>
+
+<div class="col-md-12">
+	<uib-pagination total-items="totalComments" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" class="pagination-sm" boundary-links="true" ng-show="totalComments > 20"></uib-pagination>
+</div>

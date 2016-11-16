@@ -1,0 +1,65 @@
+<div class="col-lg-9">
+   <analyst-timeline></analyst-timeline>
+</div>
+<div class="col-lg-3">
+   <div class="row">
+      <div class="panel panel-default">
+         <div class="panel-body">
+            <div class="text-center">
+               <h3 class="mt0">{{ analyst.username }}</h3>
+               <p ng-show="analyst.occupation" ng-bind="analyst.occupation"></p>
+            </div>
+            <hr>
+            <ul class="list-unstyled ph-xl">
+               <li ng-show="analyst.twitter_user">
+                  <em class="fa fa-twitter fa-fw mr-lg"></em>
+                  <a href="https://twitter.com/{{ analyst.twitter_user }}" target="_blank">
+                     @{{ analyst.twitter_user }}
+                  </a>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </div>
+   <div class="row" ng-show="isCurrentUser && analyst.can_invite">
+      <div class="panel panel-default">
+         <div class="panel-body">
+            <div class="text-center">
+               <h3 class="mt0">Invitations</h3>
+            </div>
+            
+            <hr>
+            
+            <form action="" ng-submit="sendInvitation()">
+               <div class="input-group">
+                  <input type="email" class="form-control" placeholder="Your friend's email" ng-model="new_invitation.email">
+                  <span class="input-group-btn">
+                     <button class="btn btn-primary" type="submit" ng-disable="sending">
+                        <span ng-hide="sending">Send</span>
+                        <span ng-show="sending">Sending...</span>
+                     </button>
+                  </span>
+               </div>
+            </form>
+            <p class="help-block pl">You have {{ 5 - invitations.length }} invitations left.</p>
+
+            <hr>
+
+            <table class="table table-striped">
+               <tr ng-repeat="invitation in invitations">
+                  <td>
+                     <button class="btn btn-danger btn-xs" ng-hide="invitation.is_used" ng-click="deleteInvitation(invitation)">
+                        <i class="fa fa-times"></i>
+                     </button>
+                  </td>
+                  <td>{{ invitation.email }}</td>
+                  <td>
+                     <span class="label label-success col-md-12" ng-show="invitation.is_used">Used</span>
+                     <span class="label label-info col-md-12" ng-hide="invitation.is_used">Pending</span>
+                  </td>
+               </tr>
+            </table>
+         </div>
+      </div>
+   </div>
+</div>

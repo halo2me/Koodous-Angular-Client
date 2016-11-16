@@ -1,0 +1,24 @@
+<h3>
+	Activate your account
+</h3>
+
+<div class="row">
+	<div class="panel panel-default col-md-4 col-md-offset-4 col-sm-10 col-sm-offset-1 col-xs-12">
+		<div class="panel-body pl text-center" ng-init="activate()">
+			<div ng-show="activation_loading">
+				<h3>Activating your account...</h3>
+			</div>
+			<div ng-show="activation_success">
+				<h3>Your account has been activated</h3>
+				<div class="p"></div>
+				<a class="btn btn-primary" href="/">Go to your dashboard</a>
+				<a class="btn btn-success" href="/analysts/{{ $root.user.username }}">Go to your profile</a>
+				<a class="btn btn-warning" href="/settings/profile">Change your settings</a>
+			</div>
+			<div ng-show="activation_error">
+				<h3 class="text-danger">There was an error activating your account</h3>
+				<div class="p"></div>
+			</div>
+		</div>
+	</div>
+</div>

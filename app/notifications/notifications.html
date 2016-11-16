@@ -1,0 +1,129 @@
+<h3>
+	Notifications
+</h3>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group mb-xl">
+			<form ng-submit="searchNotifications()" class="ng-pristine ng-valid">
+				<div class="input-group">
+					<input type="text" ng-model="search" placeholder="Search notifications by user, app, company or hash" class="form-control ng-pristine ng-valid">
+					<span class="input-group-btn">
+						<button class="btn btn-primary" type="submit">Search</button>
+					</span>
+				</div>
+				<div class="input-group mt ml">
+					<label class="radio-inline">
+						<input type="radio" ng-model="notification_type" value=""> All
+					</label>
+
+					<label class="radio-inline">
+						<input type="radio" ng-model="notification_type" value="comment"> Comments
+					</label>
+
+					<label class="radio-inline">
+						<input type="radio" ng-model="notification_type" value="ruleset"> Rulesets
+					</label>
+
+					<label class="radio-inline">
+						<input type="radio" ng-model="notification_type" value="voteagainst"> Votes against
+					</label>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<button class="pull-right btn btn-primary mb" ng-show="notifications.lenght != 0" ng-click="markAllAsRead();">Mark all as read</button>
+<div class="clearfix"></div>
+
+<div class="panel">
+	<div class="panel-body table-responsive" ng-show="notifications.length > 0" style="padding-top:-10px;">
+		<div class="table-grid table-grid-align-middle p bb" ng-repeat="notification in notifications" ng-class="{'bg-gray-lighter': !notification.read}" ng-click="markAsRead(notification)">
+			<div class="col thumb32">
+				<a href="/apks/{{ notification.apk.sha256 }}" ng-show="notification.apk && !notification.analyst_ref">
+					<img src="assets/img/dummy.png" alt="" class="media-object img-responsive img-rounded thumb32" ng-hide="notification.apk.image">
+					<img ng-src="{{ notification.apk.image }}" alt="" class="media-object img-responsive img-rounded thumb32" ng-show="notification.apk.image">
+				</a>
+				<a href="/analysts/{{ notification.analyst_ref.username }}" ng-show="notification.analyst_ref">
+					<img ng-src="{{ notification.analyst_ref.avatar_url }}" alt="Image" class="media-object img-circle thumb32">
+				</a>
+				<a href="/my_rulesets/{{ notification.ruleset.id }}" ng-show="notification.type=='socialaccepted' || notification.type=='socialrejected'">
+					<i class="fa fa-check fa-fw fa-2x text-success" ng-show="notification.type=='socialaccepted'"></i>
+					<i class="fa fa-times fa-fw fa-2x text-danger" ng-show="notification.type=='socialrejected'"></i>
+				</a>
+			</div>
+
+			<div class="col pl" ng-show="notification.type=='ruleset'">
+				<a href="/apks/{{ notification.apk.sha256 }}">{{ notification.apk.app || "Unknown app name" }}</a> has matches for your ruleset <a href="/my_rulesets/{{ notification.ruleset.id }}">{{ notification.ruleset.name }}</a>
+				<small class="text-muted" am-time-ago="notification.created_on*1000" title="{{ notification.created_on*1000 | date:'medium' }}"></small>
+			</div>
+			<div class="col pl" ng-show="notification.type=='socialaccepted' || notification.type=='socialrejected'">
+				Your ruleset <a href="/my_rulesets/{{ notification.ruleset.id }}">{{ notification.ruleset.name}}</a> has been 
+				<span ng-show="notification.type=='socialaccepted'" class="text-success">accepted as social ruleset.</span>
+				<span ng-show="notification.type=='socialrejected'" class="text-danger">rejected as social ruleset.</span>
+
+				<small class="text-muted" am-time-ago="notification.created_on*1000" title="{{ notification.created_on*1000 | date:'medium' }}"></small>
+			</div>
+			<div class="col pl" ng-show="notification.type=='rulesetvoteup' || notification.type=='rulesetvotedown'">
+				<a href="/analysts/{{ notification.analyst_ref.username }}">{{ notification.analyst_ref.username }} </a> has given you a
+				<span ng-show="notification.type == 'rulesetvoteup'" class="text-success">positive vote</span> <span ng-show="notification.type == 'rulesetvotedown'" class="text-danger">negative vote</span> on your ruleset <a href="/rulesets/{{ notification.ruleset.id }}">{{ notification.ruleset.name}}</a>
+				<small class="text-muted" am-time-ago="notification.created_on*1000" title="{{ notification.created_on*1000 | date:'medium' }}"></small>
+			</div>
+			<div class="col pl" ng-show="notification.type=='comment' || notification.type=='apkcomment' || notification.type=='rulesetcomment'">
+				<p class="m0">
+					<a href="/analysts/{{ notification.analyst_ref.username }}">{{ notification.analyst_ref.username }}</a> has commented about 
+
+					<a href="/apks/{{ notification.apk.sha256 }}" ng-show="notification.type=='comment' || notification.type=='apkcomment'">{{ notification.apk.app || "Unknown app name" }}</a>
+
+					<a href="/rulesets/{{ notification.ruleset.id }}" ng-show="notification.type=='rulesetcomment'">{{ notification.ruleset.name}}</a>
+
+					<small class="text-muted" am-time-ago="notification.created_on*1000" title="{{ notification.created_on*1000 | date:'medium' }}"></small>
+				</p>
+			</div>
+			<div class="col pl" ng-show="notification.type=='voteagainst'">
+				<p class="m0">
+					<a href="/analysts/{{ notification.analyst_ref.username }}">{{ notification.analyst_ref.username }} </a> has voted the opposite than you in <a href="/apks/{{ notification.apk.sha256 }}">{{ notification.apk.app || "Unknown app name" }}</a>
+					<small class="text-muted" am-time-ago="notification.created_on*1000" title="{{ notification.created_on*1000 | date:'medium' }}"></small>
+				</p>
+			</div>
+			<div class="col pl" ng-show="notification.type=='analysis'">
+				<span>
+					The analysis for 
+					<a href="/apks/{{ notification.apk.sha256 }}">{{ notification.apk.app || "Unknown app name" }}</a> has been completed.
+				</span>
+				
+				<small class="text-muted" am-time-ago="notification.created_on*1000" title="{{ notification.created_on*1000 | date:'medium' }}"></small>
+			</div>
+			<div class="col pl" ng-show="notification.type=='follow'">
+				<p class="m0">
+					<a href="/analysts/{{ notification.analyst_ref.username }}">{{ notification.analyst_ref.username }} </a> is following you
+					<small class="text-muted" am-time-ago="notification.created_on*1000" title="{{ notification.created_on*1000 | date:'medium' }}"></small>
+				</p>
+			</div>
+			<div class="col pl" ng-show="notification.type=='apkmention' || notification.type=='rulesetmention'">
+				<p class="m0">
+					<a href="/analysts/{{ notification.analyst_ref.username }}">{{ notification.analyst_ref.username }}</a> mentioned you in
+					<a href="/apks/{{ notification.apk.sha256 }}/comments" ng-show="notification.type=='apkmention'">{{ notification.apk.app || "Unknown app name" }}</a>
+
+					<a href="/rulesets/{{ notification.ruleset.id }}" ng-show="notification.type=='rulesetmention'">{{ notification.ruleset.name}}</a>
+
+					<small class="text-muted" am-time-ago="notification.created_on*1000" title="{{ notification.created_on*1000 | date:'medium' }}"></small>
+				</p>
+			</div>
+			<div class="col pl pull-right">
+				<a href="" ng-show="!notification.read">
+					<i class="fa fa-circle-o"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="p" ng-show="loading">
+		<i>
+			<i class="fa fa-spinner fa-spin fa-fw"></i> Loading...
+		</i>
+	</div>
+	<div class="p" ng-show="!loading && !apks.length && seach != ''">
+		<i>There is no notifications for your search.</i>
+	</div>
+</div>

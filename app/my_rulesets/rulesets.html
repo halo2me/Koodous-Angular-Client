@@ -1,0 +1,144 @@
+<h3>
+	My rulesets
+</h3>
+
+<div class="table-grid">
+	<div class="col col-md">
+		<div class="pr">
+			<div class="clearfix mb">
+				<button class="btn btn-primary btn-sm mb-compose-button" ng-click="newRuleset()">
+					<em class="fa fa-pencil"></em>
+					<span>New Ruleset</span>
+	            </button>
+			</div>
+			<div class="mb-boxes" style="height:0px;">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<ul class="nav nav-pills nav-stacked">
+							<li class="p">
+								<small class="text-muted">Filter by status</small>
+							</li>
+							<li ng-class="{'active': filters.active != 'True' && filters.active != 'False'}" ng-click="filters.active = ''">
+								<a href>
+									<em class="fa fa-fw fa-lg fa-list"></em>
+									<span>Both</span>
+								</a>
+							</li>
+							<li ng-class="{'active': filters.active == 'True'}" ng-click="filters.active = 'True'">
+								<a href>
+									<em class="fa fa-fw fa-lg fa-check"></em>
+									<span>Active</span>
+								</a>
+							</li>
+							<li ng-class="{'active': filters.active == 'False'}" ng-click="filters.active = 'False'">
+								<a href>
+									<em class="fa fa-fw fa-lg fa-remove"></em>
+									<span>Disabled</span>
+								</a>
+							</li>
+
+							<li class="p">
+								<small class="text-muted">Filter by privacy</small>
+							</li>
+
+							<li ng-class="{'active': filters.privacy != 'public' && filters.privacy != 'unlisted' && filters.privacy != 'private'}" ng-click="filters.privacy = ''">
+								<a href>
+									<em class="fa fa-fw fa-lg fa-list"></em>
+									<span>Both</span>
+								</a>
+							</li>
+							<li ng-class="{'active': filters.privacy == 'public'}" ng-click="filters.privacy = 'public'">
+								<a href>
+									<em class="fa fa-fw fa-lg fa-child"></em>
+									<span>Public</span>
+								</a>
+							</li>
+							<li ng-class="{'active': filters.privacy == 'private'}" ng-click="filters.privacy = 'private'">
+								<a href>
+									<em class="fa fa-fw fa-lg fa-user-secret"></em>
+									<span>Private</span>
+								</a>
+							</li>
+
+							<li class="p">
+								<small class="text-muted">Community rulesets</small>
+							</li>
+
+							<li ng-class="{'active': filters.social != 'True' && filters.social != 'False'}" ng-click="filters.social = ''">
+								<a href>
+									<em class="fa fa-fw fa-lg fa-list"></em>
+									<span>Both</span>
+								</a>
+							</li>
+							<li ng-class="{'active': filters.social == 'True'}" ng-click="filters.social = 'True'">
+								<a href>
+									<em class="fa fa-fw fa-lg fa-check"></em>
+									<span>Social</span>
+								</a>
+							</li>
+							<li ng-class="{'active': filters.social == 'False'}" ng-click="filters.social = 'False'">
+								<a href>
+									<em class="fa fa-fw fa-lg fa-remove"></em>
+									<span>Not Social</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="col">
+		<div class="panel panel-default ng-scope" ng-show="!loading && rulesets.length > 0">
+			<div class="panel-body">
+				<table class="table table-hover mb-mails truncate-table">
+					<tbody>
+						<tr ng-repeat="ruleset in rulesets" ng-class="{'mb-mail-active': ruleset == selected_ruleset}">
+							<td style="cursor: default;">
+								<div class="media">
+									<div class="media-body ml">
+										<span class="label pull-left label-default mr-sm" style="margin-top:2px;" ng-class="{'label-default': ruleset.rating == 0, 'labe	label-success': ruleset.rating > 0, 'label-danger': ruleset.rating < 0}">
+											{{ ruleset.rating || 0 }}
+										</span>
+										<span class="label pull-left mr-sm" style="margin-top:2px;" ng-class="{'label-default': ruleset.detections == 0, 'label-warning': ruleset.detections > 0}">
+											{{ ruleset.detections || 0 }}
+										</span>
+
+										<h4 class="media-heading">
+											<a href="/my_rulesets/{{ ruleset.id }}">
+												{{ ruleset.name }}
+											</a>
+
+											<span class="label label-success" ng-show="ruleset.active" style="font-size:12px;">Active</span>
+											<span class="label label-danger ng-hide" ng-hide="ruleset.active" style="font-size:12px;">Disabled</span>
+											<span class="label bg-green ng-hide" ng-show="ruleset.privacy == 'public'" style="font-size:12px;">Public</span>
+											<span class="label bg-gray-darker ng-hide" ng-show="ruleset.privacy == 'private'" style="font-size:12px;">Private</span>
+											<span class="label label-info" ng-show="ruleset.social" style="font-size:12px;">SOCIAL</span>
+
+											<br>
+
+											<small class="text-muted">
+												{{ ruleset.rules }}
+											</small>
+										</h4>
+										<small class="text-muted hide">
+											<span class="pl-sm">
+												Modified <span am-time-ago="ruleset.modified_on*1000" title="{{ ruleset.modified_on*1000 | date:'medium' }}"></span>
+											</span>
+										</small>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<uib-pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" class="pagination-sm" boundary-links="true" ng-show="totalItems > itemsPerPage"></uib-pagination>
+
+		<div class="alert alert-info" ng-hide="!loading && rulesets.length > 0">
+			You have not created any ruleset yet
+		</div>
+	</div>
+</div>

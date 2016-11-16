@@ -1,0 +1,5 @@
+<div class="too-many-connections-overlay" ng-show="$root.tooManyRequests && $root.secondsToWait > 0">
+	<div class="alert alert-danger too-many-connections-alert p-lg" role="alert">
+	    Requests limit reached. Please wait {{ $root.secondsToWait }} second/s.
+	</div>
+</div>

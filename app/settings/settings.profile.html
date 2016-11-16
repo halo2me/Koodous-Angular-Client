@@ -1,0 +1,105 @@
+<h1>Profile</h1>
+<h3></h3>
+<div class="row">
+	<div class="col-lg-6 col-md-8">
+		<uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+		
+		<div class="form-group">
+			<label>Profile picture</label>
+			<div class="mt">
+				<img ng-src="{{ $root.user.avatar_url }}" alt="Avatar" class="img-thumbnail img-circle thumb128 pull-left">
+				<button class="btn btn-info pull-left" ng-class="{'avatar-container': isCurrentUser }" ng-file-select ng-model="avatar" ng-file-change="updateAvatar(avatar)" style="margin: 40px 0 0 60px;">Select profile image</button>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+		<form ng-submit="updateUserInfo()">
+            <div class="form-group">
+                <label>First name</label>
+                <input type="text" class="form-control" placeholder="Enter your first name" ng-model="$root.user.first_name">
+            </div>
+            <div class="form-group">
+                <label>Last name</label>
+                <input type="text" class="form-control" placeholder="Enter your last name" ng-model="$root.user.last_name">
+            </div>
+            <div class="form-group">
+                <label>Occupation</label>
+                <input type="text" class="form-control" placeholder="Enter your occupation" ng-model="$root.user.occupation">
+            </div>
+            <div class="form-group">
+                <label>Bio</label>
+                <textarea class="form-control" placeholder="Write something about you" ng-model="$root.user.bio" maxlength="140"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Twitter user</label>
+                <input type="text" class="form-control" placeholder="Enter your twitter user" ng-model="$root.user.twitter_user">
+                <span class="help-block">https://twitter.com/{{ $root.user.twitter_user }}</span>
+            </div>
+            <div class="form-group">
+                <label>User REST API token</label>
+                <div>{{ api_token }}</div>
+                <span class="help-block">Don't share this information with anybody</span>
+            </div>
+            <div class="form-group">
+                <table ng-show="$root.user.api_level == 'platinumapi'">
+                    <tr>
+                        <th>Api level&nbsp;</th><td><span class="label bg-inverse-dark">Platinum</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK downloads&nbsp;</th><td><span class="label bg-inverse-dark">Unlimited/day</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK Analysis&nbsp;</th><td><span class="label bg-inverse-dark">Unlimited/day</span></td>
+                    </tr>
+                </table>
+                <table ng-show="$root.user.api_level == 'goldapi'">
+                    <tr>
+                        <th>Api level&nbsp;</th><td><span class="label bg-yellow-dark">Gold</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK downloads&nbsp;</th><td><span class="label bg-yellow-dark">200/day</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK Analysis&nbsp;</th><td><span class="label bg-yellow-dark">100/day</span></td>
+                    </tr>
+                </table>
+                <table ng-show="$root.user.api_level == 'silverapi'">
+                    <tr>
+                        <th>Api level&nbsp;</th><td><span class="label bg-gray-dark">Silver</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK downloads&nbsp;</th><td><span class="label bg-gray-dark">150/day</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK Analysis&nbsp;</th><td><span class="label bg-gray-dark">100/day</span></td>
+                    </tr>
+                </table>
+                <table ng-show="$root.user.api_level == 'bronzeapi'">
+                    <tr>
+                        <th>Api level&nbsp;</th><td><span class="label bg-warning-dark">Bronze</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK downloads&nbsp;</th><td><span class="label bg-warning-dark">100/day</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK Analysis&nbsp;</th><td><span class="label bg-warning-dark">100/day</span></td>
+                    </tr>
+                </table>
+                <table ng-show="$root.user.api_level == 'basic'">
+                    <tr>
+                        <th>Api level&nbsp;</th><td><span class="label bg-primary-dark">Basic</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK downloads&nbsp;</th><td><span class="label bg-primary-dark">50/day</span></td>
+                    </tr>
+                    <tr>
+                        <th>APK Analysis&nbsp;</th><td><span class="label bg-primary-dark">50/day</span></td>
+                    </tr>
+                </table>
+            </div>
+
+
+			<button type="submit" class="btn btn-info">Save your public information</button>
+		</form>
+
+	</div>
+</div>

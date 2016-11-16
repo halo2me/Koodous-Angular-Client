@@ -1,0 +1,88 @@
+<div class="row">
+	<div class="col-md-12">
+		<div class="form-group mb-xl">
+			<form ng-submit="searchApks()">
+				<div class="input-group mb-sm" ng-class="{'has-error': searchError}">
+					<input type="text" ng-model="$root.search" placeholder="Search by hash, appname, developer, package_name, tag, detected, analyzed, rating, certificate, size or date" class="form-control">
+					<span class="input-group-btn">
+						<button class="btn btn-primary" type="submit">Search</button>
+					</span>
+				</div>
+				<p class="help-block ml mb0 mt0" ng-show="$root.section == 'apks' && !loading">Showing {{ totalApks | number }} result/s</p>
+
+				<div>
+					<i class="text-danger ml" ng-show="searchError">{{ searchError }}</i>
+				</div>
+			</form>
+		</div>
+
+		<button class="btn btn-default pull-right btn-xs" ng-show="totalApks > 0 && $root.user.username && ruleset.analyst.username == $root.user.username" ng-click="removeMatches()" ng-disabled="removingMatches">
+			<span>Remove {{ totalApks | number }} matches</span>
+		</button>
+
+		<div class="clearfix"></div>
+		<div class="panel panel-default">
+			<!-- START table-responsive-->
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover">
+					<tbody>
+						<tr ng-repeat="apk in apks" class="ng-fadeIn">
+							<td>
+								<div class="media">
+									<div class="pull-left">
+										<a href="/apks/{{ apk.sha256 }}">
+											<img src="assets/img/dummy.png" alt="" class="media-object img-responsive img-rounded thumb64" ng-hide="apk.image">
+											<img ng-src="{{ apk.image }}" alt="" class="media-object img-responsive img-rounded thumb64" ng-show="apk.image">
+										</a>
+										<a href="/apks?search=installed:true">
+											<i class="fa fa-mobile text-info" ng-show="apk.on_devices"></i>
+										</a>
+									</div>
+									<div class="media-body ml">
+										<span class="label pull-left mr-sm" ng-class="{'label-success': apk.rating > 0, 'label-danger': apk.rating < 0, 'label-info': apk.rating == 0}" style="margin-top:2px;">{{ apk.rating }}</span>
+
+										<h4 class="media-heading">
+											<a href="/apks/{{ apk.sha256 }}">
+												{{ apk.app || 'Unknown app name'}}
+												<span ng-show="apk.package_name">({{ apk.package_name }})</span>
+											</a>
+											<small>
+												<span class="label label-danger ml" ng-show="apk.corrupted">Corrupted</span>
+												<a href="/apks?search=tag:{{tag}}" class="label label-info mr-sm" ng-repeat="tag in apk.tags">{{ tag }}</a>
+											</small>
+											<button class="btn btn-default btn-xs pull-right" ng-show="ruleset.analyst.username == $root.user.username && !$root.user.anon" ng-click="removeMatch(apk)">
+												<i class="fa fa-times"></i>
+											</button>
+										</h4>
+										<small class="text-muted">
+											{{ apk.created_on * 1000 | date:"medium" }}
+										</small>
+										<br>
+										<small class="text-muted">
+											<strong>Size:</strong> {{ apk.size|bytes }}
+										</small><br>
+										<small class="text-muted"><strong>Developer / Company:</strong> 
+											<a href='/apks?search=developer:"{{ apk.company }}"'>{{ apk.company }}</a>
+										</small>
+										<p><a href="/apks/{{ apk.sha256 }}">{{ apk.sha256 }}</a></p>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- END table-responsive-->
+			<div class="panel-footer">
+				<div class="row pl" ng-show="loading">
+					<i>
+						<i class="fa fa-spinner fa-spin fa-fw"></i> Loading...
+					</i>
+				</div>
+				<div class="row pl" ng-show="!loading && !apks.length">
+					<i>There is no apks for your search.</i>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

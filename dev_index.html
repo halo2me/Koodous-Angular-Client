@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8">
+    <base href="/">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png">
+    <title>Koodous</title>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.20.2/codemirror.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.9.0/loading-bar.css">
+    
+    <link rel="stylesheet" href="assets/css/app.css">
+    <link rel="stylesheet" href="assets/css/codemirror.css">
+    <link rel="stylesheet" href="assets/css/loading-bar.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script type="text/javascript">
+        window.appVersion = "";
+        window.last24hUploads = 0;
+        window.totalAPKDetected = 0;
+        window.totalAPKs = 0;
+        window.totalSocialRulesets = 0;
+        window.base_api_url = "https://api.koodous.com";
+    </script>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <script src="assets/js/codemirror.js"></script>
+    <script src="assets/js/codemirror_yara.js"></script>
+    <script src="assets/js/moment-with-locales.js"></script>
+    <script src="assets/js/qrcode.min.js"></script>
+    <script src="assets/js/sha256.js"></script>
+
+    <!-- Angular -->
+    <script charset="utf-8" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js?"></script>
+    <script charset="utf-8" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-sanitize.min.js"></script>
+    <script charset="utf-8" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.min.js"></script>
+    <script charset="utf-8" src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js"></script>
+    <script charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/favico.js/0.3.7/favico.min.js"></script>
+    <script charset="utf-8" src="//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.8.0/loading-bar.min.js"></script>
+    <script src="assets/js/ui-codemirror.js"></script>
+    <script src="assets/js/ui-bootstrap.min.js"></script>
+    <script src="assets/js/angular-qr.min.js"></script>
+    <script src="assets/js/angular-ui-router.min.js"></script>
+    <script src="assets/js/angular-file-upload-all.min.js"></script>
+    <script src="assets/js/angular-moment.min.js"></script>
+    <script src="assets/js/mentio.min.js"></script>
+
+    <!-- App -->
+    <script src="app/app.js"></script>
+    <script src="app/config.js"></script>
+    <script src="app/routers.js"></script>
+    <script src="app/common/directives/comment.js"></script>
+    <script src="app/common/directives/user_widget.js"></script>
+    <script src="app/common/directives/analyst_timeline.js"></script>
+    <script src="app/common/directives/add_comment_widget.js"></script>
+    <script src="app/common/filters/filters.js"></script>
+    <script src="app/common/services/api.js"></script>
+    <script src="app/analysts/analysts.js"></script>
+    <script src="app/apks/apks.js"></script>
+    <script src="app/dashboard/dashboard.js"></script>
+    <script src="app/my_rulesets/rulesets.js"></script>
+    <script src="app/notifications/notifications.js"></script>
+    <script src="app/ranking/ranking.js"></script>
+    <script src="app/register/register.js"></script>
+    <script src="app/rulesets/rulesets.js"></script>
+    <script src="app/settings/settings.js"></script>
+    <script src="app/signinup/signinup.js"></script>
+
+</head>
+
+<body class="layout-fixed admin-elements-page sb-l-o sb-r-c onload-check" ng-class="{ 'layout-fixed' : app.layout.isFixed, 'sb-l-m' : app.layout.isCollapsed, 'aside-collapsed' : app.layout.isCollapsed, 'layout-boxed' : app.layout.isBoxed, 'layout-fs': app.useFullLayout, 'hidden-footer': app.hiddenFooter, 'aside-toggled':app.layout.asideToggled }" ng-controller="AppCtrl">
+    <ng-include src="'/app/too-many-request-alert.html'"></ng-include>
+    <div class="wrapper">
+        <header ng-include="'app/header.html'" class="topnavbar-wrapper" ng-controller="HeaderCtrl"></header>
+        <aside ng-include="'app/sidebar.html'" class="aside"></aside>
+        <section>
+            <div class="content-wrapper ng-fadeIn" onload="false" autoscroll="false" ui-view></div>
+        </section>
+    </div>
+</body>
+</html>

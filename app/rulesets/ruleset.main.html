@@ -1,0 +1,62 @@
+<div class="row ruleset-code-wrapper">
+	<div class="col-md-12 pl0 pr0" ng-class="{'collapsed': codeCollapsed, 'expanded': !codeCollapsed}">
+		<ui-codemirror ng-model="ruleset.rules" ui-codemirror-opts="editorOptions" ng-change="rulesetChanged = true"></ui-codemirror>
+	</div>
+	<div class="text-center">
+		<button class="btn btn-default btn-sm pr-xl pl-xl bt0" style="margin-top:-2px;" ng-click="codeCollapsed = !codeCollapsed">
+			<i class="fa fa-sort-down" ng-class="{'fa-sort-down': codeCollapsed, 'fa-sort-up': !codeCollapsed}"></i>
+		</button>
+	</div>
+</div>
+
+<div ng-controller="RulesetCommentsController" ng-show="ruleset.privacy == 'public'">
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Comments</h3>
+			<hr>
+			<i ng-hide="comments.length > 0">There is no comments for this APK</i>
+			<div class="list-group-item" ng-repeat="comment in comments">
+				<div class="media">
+					<div class="pull-left">
+						<img ng-src="{{ comment.author.avatar_url }}" alt="Image" class="media-object img-circle thumb32">
+					</div>
+					<div class="media-body clearfix" ng-hide="comment.editing">
+						<a href="/analysts/{{ comment.author.username }}" class="media-heading text-primary">{{ comment.author.username }}</a>,
+						<small am-time-ago="comment.created_on*1000" title="{{ comment.created_on*1000 | date:'medium' }}"></small>
+
+						<p class="mb-sm" style="white-space: pre-line;" ng-bind-html="comment.text | linky:'_blank' | mentions"></p>
+
+						<div style="font-size:12px;" ng-show="comment.author.username == $root.user.username">
+							<a href="" ng-click="deleteComment(comment);">Delete</a> | 
+							<a href="" ng-click="comment.editing=true;">Edit</a>
+						</div>
+					</div>
+					<div class="media-body clearfix" ng-show="comment.editing">
+						<div class="form-group" ng-init="comment.newtext = comment.text">
+							<add-comment-widget ng-model="comment.newtext"></add-comment-widget>
+							<button class="btn btn-default" type="button" ng-click="comment.editing=false;comment.newtext = comment.text;" tabindex="-1">Discard changes</button>
+							<button class="btn btn-primary" type="button" ng-click="updateComment(comment);">Update comment</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="mt" ng-show="nextPage">
+				<button class="btn btn-primary" ng-click="getComments()">Load more comments</button>
+			</div>
+		</div>
+
+		<div class="col-md-12">
+			<uib-pagination total-items="totalComments" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" class="pagination-sm" boundary-links="true" ng-hide="comments.length == 0"></uib-pagination>
+		</div>
+
+		<div class="col-md-12" ng-hide="$root.user.anon">
+			<form ng-submit="addComment()" class="ng-pristine ng-valid">
+				<h3>New comment</h3>
+				<div class="form-group">
+					<add-comment-widget ng-model="newComment.text"></add-comment-widget>
+				</div>
+				<button class="btn btn-primary" type="submit">Send comment</button>
+			</form>
+		</div>
+	</div>
+</div>

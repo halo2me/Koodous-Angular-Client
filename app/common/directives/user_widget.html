@@ -1,0 +1,19 @@
+<div>
+	<div class="panel widget users">
+		<div class="half-float">
+			<div class="bg-cover" style="height:100px;"></div>
+			<div class="half-float-bottom">
+				<img ng-src="{{ user.avatar_url }}" alt="Image" class="img-thumbnail img-circle thumb128" ng-show="user.avatar_url">
+
+				<img src="/assets/img/default_avatar.png" alt="Image" class="img-thumbnail img-circle thumb128" ng-hide="user.avatar_url">
+			</div>
+		</div>
+		<div class="panel-body text-center">
+			<h3 class="m0">
+				<a href="/analysts/{{ user.username }}">{{ user.username }}</a>
+			</h3>
+			<p class="text-muted">{{ user.profession }}</p>
+			<p>{{ user.bio }}</p>
+		</div>
+	</div>
+</div>

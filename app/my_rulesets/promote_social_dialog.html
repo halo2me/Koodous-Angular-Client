@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h3 class="modal-title">Ruleset social promotion</h3>
+</div>
+<div class="modal-body text-center">
+	<p ng-hide="checking || checked">
+		Your ruleset needs to be validated before it gets the 'social' status. Click on promote button
+		to start the process and our system will notify you when it finish.
+	</p>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-default" ng-click="close()">Close</button>
+    <button class="btn btn-primary" ng-click="ok()" ng-hide="checked">Promote</button>
+</div>

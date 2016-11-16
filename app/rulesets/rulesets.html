@@ -1,0 +1,75 @@
+<h3>
+	Community rulesets
+</h3>
+
+<div class="table-grid">
+	<div class="form-group mb-xl">
+		<form ng-submit="searchRulesets()">
+			<div class="input-group mb" ng-class="{'has-error': searchError}">
+				<input type="text" ng-model="$root.search" placeholder="Search by ruleset name or author's username" class="form-control">
+				<span class="input-group-btn">
+					<button class="btn btn-primary" type="submit">Search</button>
+				</span>
+			</div>
+			<div class="ml">
+				<label class="radio-inline">
+					<input type="radio" ng-model="filters.social" value=""> All
+				</label>
+				<label class="radio-inline">
+					<input type="radio" ng-model="filters.social" value="True"> Social
+				</label>
+				<label class="radio-inline">
+					<input type="radio" ng-model="filters.social" value="False"> No social
+				</label>
+			</div>
+		</form>
+	</div>
+
+	<p ng-show="loading" class="ng-fadeIn pl"><i class="fa fa-circle-o-notch fa-spin"></i> Loading rulesets...</p>
+	<p class="pl" ng-hide="loading">Showing {{ totalItems | number }} results</p>
+	<div class="panel panel-default ng-scope" ng-show="!loading && rulesets.length > 0">
+		<div class="panel-body">
+			<table class="table table-hover mb-mails table-striped truncate-table">
+				<tbody>
+					<tr ng-repeat="ruleset in rulesets" ng-class="{'info': ruleset.social}">
+						<td style="cursor: default;">
+							<div class="media">
+								<div class="media-body ml">
+									<span class="label pull-left label-default mr-sm" style="margin-top:2px;" ng-class="{'label-default': ruleset.rating == 0, 'labe	label-success': ruleset.rating > 0, 'label-danger': ruleset.rating < 0}">
+										{{ ruleset.rating || 0 }}
+									</span>
+									<span class="label pull-left mr-sm" style="margin-top:2px;" ng-class="{'label-default': ruleset.detections == 0, 'label-warning': ruleset.detections > 0}">
+										{{ ruleset.detections || 0 }}
+									</span>
+
+									<h4 class="media-heading">
+										<a href="/rulesets/{{ ruleset.id }}">
+											{{ ruleset.name }}
+										</a>
+										<small class="text-muted">
+											{{ ruleset.rules|truncate:400 }}
+										</small>
+									</h4>
+									<small class="text-muted">
+										<a href="/analysts/{{ ruleset.analyst.username }}">
+											<img ng-src="{{ ruleset.analyst.avatar_url }}" alt="Avatar" class="img-circle" style="height:20px; width:20px;" ng-show="ruleset.analyst.avatar_url">
+											<img src="/assets/img/default_avatar.png" alt="Avatar" class="img-circle" style="height:20px; width:20px;" ng-hide="ruleset.analyst.avatar_url">
+										</a>
+										<span class="pl-sm">
+											Modified by <a href="/analysts/{{ ruleset.analyst.username }}">{{ ruleset.analyst.username }}</a> <span am-time-ago="ruleset.modified_on*1000" title="{{ ruleset.modified_on*1000 | date:'medium' }}"></span>
+										</span>
+									</small>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="panel-footer">
+			<div class="row">
+				<uib-pagination total-items="totalItems" items-per-page="itemsPerPage" ng-model="currentPage" ng-change="pageChanged()" max-size="maxSize" class="pagination-sm pull-right text-right pr" boundary-links="true" ng-show="totalItems > itemsPerPage"></uib-pagination>
+			</div>
+		</div>
+	</div>
+</div>

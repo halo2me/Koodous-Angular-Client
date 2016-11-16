@@ -1,0 +1,159 @@
+<!-- START Top Navbar-->
+<nav role="navigation" class="navbar topnavbar">
+    <!-- START navbar header-->
+    <div class="navbar-header">
+        <a href="/" class="navbar-brand">
+            <div class="brand-logo">
+                <img src="assets/img/koodous-logo.png" alt="App Logo"/>
+            </div>
+            <div class="brand-logo-collapsed">
+                <img src="assets/img/logo-single.svg" alt="App Logo"/>
+            </div>
+        </a>
+    </div>
+    <!-- END navbar header-->
+    <!-- START Nav wrapper-->
+    <div class="nav-wrapper">
+        <ul class="nav navbar-nav">
+            <li>
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a href ng-click="app.layout.isCollapsed = !app.layout.isCollapsed" class="hidden-xs">
+                    <em class="fa fa-navicon"></em>
+                </a>
+                
+                <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+                <a href ng-click="app.layout.asideToggled = !app.layout.asideToggled" no-persist="no-persist" class="visible-xs sidebar-toggle">
+                    <em class="fa fa-navicon"></em>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li class="visible-xs" ng-hide="$root.user.anon">
+                <a href="/analysts/{{ $root.user.username }}" class="p0 pr">
+                    <img ng-src="{{ $root.user.avatar_url }}" alt="Avatar" width="40" height="40" class="img-thumbnail img-circle">
+                </a>
+            </li>
+
+            <li class="dropdown dropdown-list" uib-dropdown ng-hide="$root.user.anon">
+                <a href="" class="dropdown-toggle" uib-dropdown-toggle ng-click="getNotifications()">
+                    <em class="fa fa-bell"></em>
+                    <div class="label label-danger" ng-show="$root.unreadNotifications != 0">{{ $root.unreadNotifications }}</div>
+                </a>
+                <!-- START Dropdown menu-->
+                <ul class="col-md-3 dropdown-menu animated flipInX">
+                    <li>
+                        <!-- START list group-->
+                        <div class="list-group notifications-dropdown">
+                            <!-- list item-->
+                            <a class="list-group-item" ng-repeat="notification in notifications" ng-class="{'read': notification.read}" href="{{ notification.targetUrl }}">
+                                <div class="media">
+                                    <div class="pull-left">
+                                        <div class="media">
+                                            <img ng-src="{{ notification.analyst_ref.avatar_url }}" alt="Image" class="img-responsive img-circle" style="height:55px;" ng-hide="notification.type=='ruleset' || notification.type=='analysis' || notification.type=='socialaccepted' || notification.type=='socialrejected'">
+                                            <img ng-src="{{ notification.apk.image }}" alt="Image" class="img-responsive img-circle" style="height:55px;" ng-show="notification.type=='ruleset' || notification.type=='analysis'">
+                                            <i class="fa fa-check fa-fw fa-2x text-success" ng-show="notification.type=='socialaccepted'"></i>
+                                            <i class="fa fa-times fa-fw fa-2x text-danger" ng-show="notification.type=='socialrejected'"></i>
+                                        </div>
+                                    </div>
+                                    <div class="media-body clearfix">
+                                        <p class="m0" ng-show="notification.type=='ruleset'">
+                                            {{ notification.apk.app || "Unknown app name" }} has matches for your rulesets
+                                        </p>
+
+                                        <p class="m0" ng-show="notification.type=='socialaccepted' || notification.type=='socialrejected'">
+                                            Your ruleset {{ notification.ruleset.name}} has been 
+                                            <span ng-show="notification.type=='socialaccepted'" class="text-success">accepted as social ruleset.</span>
+                                            <span ng-show="notification.type=='socialrejected'" class="text-danger">rejected as social ruleset.</span>
+                                        </p>
+
+                                        <p class="m0" ng-show="notification.type=='rulesetvoteup' || notification.type=='rulesetvotedown'">
+                                            {{ notification.analyst_ref.username }} has given you a
+                                            <span ng-show="notification.type == 'rulesetvoteup'" class="text-success">positive vote</span> <span ng-show="notification.type == 'rulesetvotedown'" class="text-danger">negative vote</span> on your ruleset {{ notification.ruleset.name}}
+                                        </p>
+
+                                        <p class="m0" ng-show="notification.type=='rulesetmention' || notification.type=='apkmention'">
+                                            {{ notification.analyst_ref.username }} mentioned you in
+                                            <span ng-show="notification.type=='apkmention'">{{ notification.apk.app || "Unknown app name" }}</span>
+                                            <span ng-show="notification.type=='rulesetmention'">{{ notification.ruleset.name}}</span>
+                                        </p>
+
+                                        <p class="m0" ng-show="notification.type=='apkcomment' || notification.type=='comment'">
+                                            {{ notification.analyst_ref.first_name }} {{ notification.analyst_ref.last_name }} has commented about {{ notification.apk.app || "Unknown app name" }}
+                                        </p>
+
+                                        <p class="m0" ng-show="notification.type=='rulesetcomment'">
+                                            {{ notification.analyst_ref.first_name }} {{ notification.analyst_ref.last_name }} has commented about {{ notification.ruleset.name }}
+                                        </p>
+
+                                        <p class="m0" ng-show="notification.type=='voteagainst'">
+                                            {{ notification.analyst_ref.first_name }} {{ notification.analyst_ref.last_name }} has voted the opposite than you in {{ notification.apk.app || "Unknown app name" }}
+                                        </p>
+
+                                        <p class="m0" ng-show="notification.type=='analysis'">
+                                            The analysis for 
+                                            {{ notification.apk.app || "Unknown app name" }} has been completed.
+                                        </p>
+
+                                        <p class="m0" ng-show="notification.type=='follow'">
+                                            {{ notification.analyst_ref.username }} is following you
+                                        </p>
+                                        
+                                        <p class="m0 text-muted">
+                                            <small am-time-ago="notification.created_on*1000" title="{{ notification.created_on*1000 | date:'medium' }}"></small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                            <!-- last list item -->
+                            <a href="/notifications" class="list-group-item">
+                                <small>More notifications</small>
+                            </a>
+                        </div>
+                        <!-- END list group-->
+                    </li>
+                </ul>
+                <!-- END Dropdown menu-->
+            </li>
+
+            <li ng-show="uploading">
+                <progressbar class="progress-striped active" value="uploadProgress" type="default"></progressbar>
+            </li>
+            
+
+            <li ng-show="$root.user.anon" class="mr">
+                <a href="/register" class="p0">
+                    <button class="btn bg-green mt">
+                        <i class="fa fa-user-plus"></i>
+                        <span class="hidden-xs">Create your account</span>
+                    </button>
+                </a>
+            </li>
+            <li ng-show="$root.user.anon" class="">
+                <a href="/login" class="p0 pr">
+                    <button class="btn btn-info mt">
+                        <i class="fa fa-user"></i>
+                        <span class="hidden-xs">Authenticate</span>
+                    </button>
+                </a>
+            </li>
+            <li ng-hide="uploading">
+                <!-- <button class="btn btn-info" href ng-file-select ng-model="file" ng-file-change="upload(file)" ng-class="{'btn-info mt mr':$root.user.anon, 'btn-link':!$root.user.anon}">
+                    <i class="fa fa-upload"></i>
+                    <span class="hidden-xs" ng-show="$root.user.anon">Upload</span>
+                </button> -->
+                <button class="btn btn-info" href ng-click="openUploaderModal()" ng-class="{'btn-info mt mr':$root.user.anon, 'btn-link':!$root.user.anon}">
+                    <i class="fa fa-upload"></i>
+                    <span class="hidden-xs" ng-show="$root.user.anon">Upload</span>
+                </button>
+            </li>
+            <li ng-show="$root.user.username" class="mr">
+                <a href ng-click="logout()" target="_self">
+                    <em class="fa fa-power-off"></em>
+                </a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <!-- END Nav wrapper-->
+</nav>
+<!-- END Top Navbar

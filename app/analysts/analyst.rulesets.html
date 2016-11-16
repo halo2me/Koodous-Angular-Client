@@ -1,0 +1,43 @@
+<div class="col-md-12">
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<table class="table table-hover mb-mails  table-striped truncate-table">
+				<tbody>
+					<tr ng-repeat="ruleset in rulesets" ng-class="{'info': ruleset.social}">
+						<td style="cursor: default;">
+							<div class="media">
+								<div class="media-body ml">
+									<span class="label pull-left label-default mr-sm" style="margin-top:2px;" ng-class="{'label-default': ruleset.rating == 0, 'labe	label-success': ruleset.rating > 0, 'label-danger': ruleset.rating < 0}">
+										{{ ruleset.rating || 0 }}
+									</span>
+									<span class="label pull-left mr-sm" style="margin-top:2px;" ng-class="{'label-default': ruleset.detections == 0, 'label-warning': ruleset.detections > 0}">
+										{{ ruleset.detections || 0 }}
+									</span>
+
+									<h4 class="media-heading">
+										<a href="/rulesets/{{ ruleset.id }}">
+											{{ ruleset.name }}
+										</a>
+										<small class="text-muted">
+											{{ ruleset.rules|truncate:400 }}
+										</small>
+									</h4>
+									<small class="text-muted">
+										<a href="/analysts/{{ analyst.username }}">
+											<img ng-src="{{ analyst.avatar_url }}" alt="Avatar" class="img-circle" style="height:20px; width:20px;">
+										</a>
+										<span class="pl-sm">
+											Modified by <a href="/analysts/{{ analyst.username }}">{{ analyst.username }}</a> <span am-time-ago="ruleset.modified_on*1000" title="{{ ruleset.modified_on*1000 | date:'medium' }}"></span>
+										</span>
+									</small>
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	
+	<uib-pagination total-items="rulesetsTotalItems" items-per-page="rulesetsItemsPerPage" ng-model="rulesetsCurrentPage" ng-change="rulesetPageChange()" max-size="rulesetsMaxSize" class="pagination-sm" boundary-links="true"></uib-pagination>
+</div>

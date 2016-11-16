@@ -1,0 +1,86 @@
+<!-- START timeline-->
+<ul class="timeline">
+   <li data-datetime="Now" class="timeline-separator"></li>
+   <!-- START timeline item-->
+   <li ng-class-even="'timeline-inverted'" ng-repeat="row in activity">
+      <div class="timeline-badge primary" ng-show="row.type =='comment' || row.type =='apkcomment' || row.type =='rulesetcomment'">
+         <em class="fa fa-comment"></em>
+      </div>
+      <div class="timeline-badge success" ng-show="row.type =='voteup' || row.type =='apkvoteup' || row.type =='rulesetvoteup'">
+         <em class="fa fa-thumbs-o-up"></em>
+      </div>
+      <div class="timeline-badge danger" ng-show="row.type =='votedown' || row.type =='apkvotedown' || row.type =='rulesetvotedown'">
+         <em class="fa fa-thumbs-o-down"></em>
+      </div>
+      
+      <div class="timeline-panel">
+         <div class="popover" ng-class-even="'right'" ng-class-odd="'left'">
+            <div class="arrow"></div>
+            <div class="popover-content">
+               <div class="table-grid table-grid-align-middle mb">
+                  <div class="col thumb64 mr">
+                     <a href="/analysts/{{ row.analyst.username }}">
+                        <img ng-src="{{ row.analyst.avatar_url }}" alt="Image" class="media-object img-circle thumb48" ng-show="row.analyst.avatar_url">
+                        <img src="/assets/img/default_avatar.png" alt="" alt="Image" class="media-object img-circle thumb48" ng-hide="row.analyst.avatar_url">
+                     </a>
+                  </div>
+                  <div class="col">
+                     <p class="m0">
+                        <a href="/analysts/{{ row.analyst.username }}" ng-bind="row.analyst.username"></a>
+                        <span ng-show="row.type == 'comment' || row.type == 'apkcomment' || row.type == 'rulesetcomment'">
+                           wrote a comment about 
+                           <a href="/apks/{{ row.apk.sha256 }}" class="text-primary" ng-show="row.type == 'comment' || row.type == 'apkcomment'">
+                              <strong>{{ row.apk.app || "Unknown app name" }}</strong>
+                           </a>
+                           <a href="/rulesets/{{ row.ruleset.id }}" class="text-primary" ng-show="row.type == 'rulesetcomment'">
+                              <strong>{{ row.ruleset.name }}</strong>
+                           </a>
+                        </span>
+
+                        <span ng-show="row.type == 'voteup' || row.type == 'apkvoteup' || row.type == 'rulesetvoteup'">
+                           gave a <strong class="text-success">positive</strong> vote to 
+                           
+                           <a href="/apks/{{ row.apk.sha256 }}" class="text-primary" ng-show="row.type == 'voteup' || row.type == 'apkvoteup'">
+                              <strong>{{ row.apk.app || "Unknown app name" }}</strong>
+                           </a>
+                           <a href="/rulesets/{{ row.ruleset.id }}" class="text-primary" ng-show="row.type == 'rulesetvoteup'">
+                              <strong>{{ row.ruleset.name }}</strong>
+                           </a>
+                        </span>
+
+                        <span ng-show="row.type == 'votedown' || row.type == 'apkvotedown' || row.type == 'rulesetvotedown'">
+                           gave a <strong class="text-danger">negative</strong> vote to 
+                           
+                           <a href="/apks/{{ row.apk.sha256 }}" class="text-primary" ng-show="row.type == 'votedown' || row.type == 'apkvotedown'">
+                              <strong>{{ row.apk.app || "Unknown app name" }}</strong>
+                           </a>
+                           <a href="/rulesets/{{ row.ruleset.id }}" class="text-primary" ng-show="row.type == 'rulesetvotedown'">
+                              <strong>{{ row.ruleset.name }}</strong>
+                           </a>
+                        </span>
+                     </p>
+                     <p class="text-muted" am-time-ago="row.created_on*1000" title="{{ row.created_on*1000 | date:'medium' }}"></p>
+                  </div>
+                  <div class="col thumb64" ng-show="row.apk">
+                     <a href="/apks/{{ row.apk.sha256 }}">
+                        <img ng-src="/assets/img/dummy.png" alt="" class="media-object img-responsive img-rounded thumb64" ng-hide="row.apk.image">
+                        <img ng-src="{{ row.apk.image }}" alt="" class="media-object img-responsive img-rounded thumb64" ng-show="row.apk.image">
+                     </a>
+                  </div>
+               </div>
+               <p ng-show="row.type == 'comment' || row.type == 'apkcomment' || row.type == 'rulesetcomment'">
+                  <em>"{{ row.comment.text }}"</em>
+               </p>
+            </div>
+         </div>
+      </div>
+   </li>
+   <!-- END timeline item-->
+
+   <li class="timeline-end">
+      <a class="timeline-badge">
+         <em class=""></em>
+      </a>
+   </li>
+</ul>
+<!-- END timeline-->

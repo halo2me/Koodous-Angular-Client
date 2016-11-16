@@ -1,0 +1,155 @@
+<div class="row">
+	<div class="meta-info col-md-2">
+		<div class="title">App name</div>
+		<div class="content">{{ apk.app || "Unknown" }}</div>
+	</div>
+	<div class="meta-info col-md-2">
+		<div class="title">Package</div>
+		<div class="content">{{ apk.package_name || "Unknown" }}</div>
+	</div>
+	<div class="meta-info col-md-2">
+		<div class="title">Developer</div>
+		<div class="content">{{ apk.company || "Unknown" }}</div>
+	</div>
+	<div class="meta-info col-md-2">
+		<div class="title">Displayed version</div>
+		<div class="content">{{ apk.displayed_version || "Unknown" }}</div>
+	</div>
+	<div class="meta-info col-md-2">
+		<div class="title">Date added</div>
+		<div class="content">{{ apk.created_on * 1000 | date:"medium" }}</div>
+	</div>
+	<div class="meta-info col-md-2">
+		<div class="title">APK size</div>
+		<div class="content" ng-show="apk.size > 0">{{ apk.size|bytes }}</div>
+		<div class="content" ng-show="apk.size <= 0">Unknown</div>
+	</div>
+	<div class="meta-info col-md-2"></div>
+</div>
+<div class="row">
+	<div class="meta-info col-md-6">
+		<div class="title">SHA256</div>
+		<div class="content">{{ apk.sha256 }}</div>
+	</div>
+	<div class="meta-info col-md-3">
+		<div class="title">SHA1</div>
+		<div class="content">{{ apk.sha1 }}</div>
+	</div>
+	<div class="meta-info col-md-3">
+		<div class="title">MD5</div>
+		<div class="content">{{ apk.md5 }}</div>
+	</div>
+</div>
+<div class="row mt">
+	<div class="col-md-4 meta-info">
+		<div class="title mb">
+			<i class="fa fa-fw" ng-class="{'fa-angle-right':!apk.show_detections, 'fa-angle-down':apk.show_detections}"></i>
+			<a href="" ng-click="apk.show_detections = !apk.show_detections;">Top expert analysts detections <span ng-class="{'text-danger': apk.total_detections > 0, 'text-success':apk.total_detections == 0}">({{ apk.total_detections }})</span></a>
+		</div>
+		<div class="content" ng-show="apk.show_detections">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>Analyst</td>
+						<td align="center">Ruleset</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="detection in apk.detections" style="font-weight:bold;">
+						<td>
+							<a href="/analysts/{{detection.username}}">{{ detection.username }}</a>
+						</td>
+						<td align="center">
+							<span class="dropdown" uib-dropdown on-toggle="toggled(open)" ng-show="detection.detected">
+								<a href class="dropdown-toggle" uib-dropdown-toggle>
+									<span class="text-danger">
+										Detected
+									</span>
+									<span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu" ng-show="detection.rulesets.length">
+									<li ng-repeat="ruleset in detection.rulesets">
+										<a href="/rulesets/{{ ruleset.id }}">{{ruleset.name}}</a>
+									</li>
+								</ul>
+							</span>
+							<span class="text-muted" ng-hide="detection.detected">
+								-
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-4 meta-info">
+		<div class="title mb">
+			<i class="fa fa-fw" ng-class="{'fa-angle-right':!apk.show_votes, 'fa-angle-down':apk.show_votes}"></i>
+			<a href="" ng-click="apk.show_votes = !apk.show_votes;">Analyst votes 
+				<span>({{ apk.votes.count }})</span>
+			</a>
+		</div>
+		<div class="content" ng-show="apk.show_votes">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>Analyst</td>
+						<td align="center">Vote type</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="vote in apk.votes.results" style="font-weight:bold;">
+						<td>
+							<a href="/analysts/{{vote.analyst}}">{{ vote.analyst }}</a>
+						</td>
+						<td align="center">
+							<span ng-class="{'text-danger': vote.kind == 'negative', 'text-success':vote.kind == 'positive'}">
+								<span ng-show="vote.kind == 'negative'">Negative</span>
+								<span ng-show="vote.kind == 'positive'">Positive</span>
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-md-4 meta-info">
+		<div class="title mb">
+			<i class="fa fa-fw" ng-class="{'fa-angle-right':!apk.show_avs, 'fa-angle-down':apk.show_avs}"></i>
+			<a href="" ng-click="apk.show_avs = !apk.show_avs;">AV scans
+				<span>({{ apk.av_scans[0].total_detections }}/{{ apk.av_scans[0].results.length }})</span>
+			</a>
+		</div>
+		<div class="content" ng-show="apk.show_avs">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>AV name</td>
+						<td align="center">Signature</td>
+						<td align="center">Update</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr style="font-weight:bold;" ng-repeat="result in apk.av_scans[0].results">
+						<td>
+							{{ result.name }}
+						</td>
+						<td align="center">
+							<span class="text-danger" ng-show="result.signature">
+								{{ result.signature }}
+							</span>
+							<span ng-hide="result.signature">
+								-
+							</span>
+						</td>
+						<td align="center">
+							<span>
+								{{ result.update }}
+							</span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

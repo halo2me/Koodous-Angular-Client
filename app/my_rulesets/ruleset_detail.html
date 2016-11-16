@@ -1,0 +1,137 @@
+<h3 ng-show="ruleset">
+	<div class="pull-left">
+		<span ng-hide="editName">
+			<a href="/my_rulesets">
+				<i class="fa fa-arrow-left"></i>
+			</a>
+			<a href="" ng-click="editName = true">{{ ruleset.name }}</a>
+			<span class="label label-success" ng-show="ruleset.active" style="font-size:12px;">Active</span>
+			<span class="label label-danger ng-hide" ng-hide="ruleset.active" style="font-size:12px;">Disabled</span>
+			<span class="label bg-green ng-hide" ng-show="ruleset.privacy == 'public'" style="font-size:12px;">Public</span>
+			<span class="label bg-gray-darker ng-hide" ng-show="ruleset.privacy == 'private'" style="font-size:12px;">Private</span>
+			<span class="label label-info" ng-show="ruleset.social" style="font-size:12px;">SOCIAL</span>
+			<small class="mt">
+				(
+				<a href="/rulesets/{{ ruleset.id }}">
+					<i class="fa fa-eye"></i>
+					Public page
+				</a>
+				)
+			</small>
+		</span>
+
+		<form ng-submit="save(); editName=false" ng-show="editName">
+			<div class="input-group col-md-3">
+				<input type="text" class="form-control" ng-model="ruleset.name" name="editName" style="min-width:300px;">
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit">Change name</button>
+				</span>
+			</div>
+		</form>
+	</div>
+	<div class="clearfix"></div>
+	<small class="mt">
+		<span ng-hide="saving">Saved. Last modification on {{ ruleset.modified_on * 1000|date }}</span>
+		<span ng-show="saving">Saving...</span>
+	</small>
+	<small class="mt">
+		<a href="/rulesets/{{ ruleset.id }}/apks">
+			<span ng-show="ruleset.detections">This ruleset has detected {{ ruleset.detections }} apks. </span>Show detections</a>
+	</small>
+</h3>
+
+<!-- Messages -->
+<div class="row" ng-show="!ruleset.active && ruleset">
+	<div class="col-md-12">
+		<div class="alert bg-gray-darker ml-xl">
+			This ruleset is not active. <a href ng-click="ruleset.active=true;save()">Click here to activate it</a>
+		</div>
+	</div>
+</div>
+<div class="row" ng-show="social_revokation && !ruleset.social && !ruleset.pending_social">
+	<div class="col-md-12">
+		<div class="alert bg-warning ml-xl">
+			This ruleset has lost its social status as it has been modified. Remember to <a href ng-click="openSocialPromotionDialog();">promote it to social</a> again once you have finished.
+		</div>
+	</div>
+</div>
+<div class="row" ng-show="compilationError">
+	<div class="col-md-12">
+		<div class="alert alert-danger ml-xl">
+			<button type="button" class="close" ng-click="compilationError = false;"><span aria-hidden="true">&times;</span></button>
+			<strong>Ruleset compilation error. </strong><em>"{{ compilationErrorText }}"</em>
+		</div>
+	</div>
+</div>
+<div class="row" ng-show="ruleset.active && !ruleset.social && !ruleset.pending_social">
+	<div class="col-md-12">
+		<div class="well well-sm ml-xl">
+			This ruleset is ready to be promoted to social enviroment. <a href ng-click="openSocialPromotionDialog();">Click here to promote</a> and all your followers will be notified of your detections. <a href ng-click="openHelpDialog()">Learn more about this</a>
+		</div>
+	</div>
+</div>
+<div class="row" ng-show="ruleset.pending_social">
+	<div class="col-md-12">
+		<div class="alert alert-info ml-xl">
+			This rulesets is in our social checks system. You will notified when it gets the social status.
+		</div>
+	</div>
+</div>
+<div class="row" ng-show="ruleset.social">
+	<div class="col-md-12">
+		<div class="alert alert-info ml-xl">
+			This ruleset is inside the social enviroment so its helping the comunity to detect relevant software.
+		</div>
+	</div>
+</div>
+<!-- End of messages -->
+
+<div class="row" style="height: calc(100vh - 320px); min-height:400px;">
+	<div class="col-md-9" style="height: 100%">
+		<ui-codemirror ng-model="ruleset.rules" ui-codemirror-opts="editorOptions" ng-change="rulesetChanged = true"></ui-codemirror>
+	</div>
+	<div class="col-md-3" style="height:100%; min-height:400px;" ng-show="ruleset">
+		<h4>General settings</h4>
+		<div class="btn-group btn-block">
+			<label class="btn btn-default col-md-6" ng-model="ruleset.privacy" uib-btn-radio="'public'" ng-click="ruleset.privacy = 'public';save();">
+				<i class="fa fa-globe fa-fw"></i> Public
+			</label>
+			<label class="btn btn-default col-md-6" ng-model="ruleset.privacy" uib-btn-radio="'private'" ng-click="ruleset.privacy = 'private';save();">
+				<i class="fa fa-user-secret fa-fw"></i> Private
+			</label>
+	    </div>
+	    <div class="btn-group btn-block">
+			<label class="btn btn-default col-md-6" ng-model="ruleset.active" uib-btn-radio="true" ng-click="ruleset.active=true;save()">
+				<i class="fa fa-check fa-fw"></i> Active
+			</label>
+			<label class="btn btn-default col-md-6" ng-model="ruleset.active" uib-btn-radio="false" ng-click="ruleset.active=false;save()">
+				<i class="fa fa-ban fa-fw"></i> Disabled
+			</label>
+	    </div>
+	    <div class="btn-group btn-block">
+			<label class="btn btn-default col-md-6" ng-model="ruleset.send_notifications" uib-btn-radio="true" ng-click="ruleset.send_notifications=true;save()">
+				<i class="fa fa-exclamation-circle fa-fw"></i> Notify me
+			</label>
+			<label class="btn btn-default col-md-6" ng-model="ruleset.send_notifications" uib-btn-radio="false" ng-click="ruleset.send_notifications=false;save()">
+				<i class="fa fa-times fa-fw"></i> Do not notify
+			</label>
+	    </div>
+		<div ng-show="!ruleset.social && !ruleset.pending_social && ruleset">
+			<hr>
+			<h4>Social enviroment 
+				<small>(<a href ng-click="openHelpDialog()">
+					Learn more
+					</a>)</small>
+			</h4>
+			<button class="btn btn-success btn-block" ng-click="openSocialPromotionDialog();">
+				<i class="fa fa-level-up fa-fw"></i>
+				Promote social
+			</button>
+		</div>
+		<hr>
+		<button class="btn btn-danger btn-block" ng-click="delete()" ng-show="ruleset">
+			<i class="fa fa-trash fa-fw"></i>
+			Delete
+		</button>
+	</div>
+</div>

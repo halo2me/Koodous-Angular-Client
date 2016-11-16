@@ -1,0 +1,77 @@
+<div class="row profile-wrapper">
+	<div class="row">
+		<div class="bg-cover">
+			<div class="p-xl text-center text-white">
+				<div>
+					<img ng-src="{{ analyst.avatar_url }}" alt="Avatar" class="img-thumbnail img-circle thumb128" ng-show="analyst.avatar_url">
+
+					<img src="/assets/img/default_avatar.png" alt="Avatar" class="img-thumbnail img-circle thumb128" ng-hide="analyst.avatar_url">
+				</div>
+
+				<h3 class="m0" ng-bind="analyst.username">
+				</h3>
+
+				<p ng-show="analyst.occupation" ng-bind="analyst.occupation"></p>
+				<p ng-show="analyst.bio" ng-bind="analyst.bio"></p>
+
+				<div class="mt text-center" ng-show="!loadingRelInfo && analyst.username != $root.user.username && !$root.user.anon">
+					<button type="button" class="btn btn-labeled btn-info mt" ng-hide="isFollowed" ng-click="follow()">
+						<span class="btn-label"><i class="fa fa-chain"></i>
+						</span>Follow
+					</button>
+
+					<button type="button" class="btn btn-labeled btn-warning mt" ng-show="isFollowed && !$root.user.anon" ng-click="unFollow()">
+						<span class="btn-label"><i class="fa fa-chain-broken"></i>
+						</span>Unfollow
+					</button>
+				</div>
+
+				<div class="text-center mt" ng-show="isCurrentUser">
+					<a href="/settings/profile" class="btn btn-info">
+						Edit your profile
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="text-center bg-gray-dark p-lg mb-xl">
+			<div class="row row-table analyst-page-nav">
+				<div class="col-xs-4 br cursor_pointer" ng-class="{'selected': $root.profile_section == 'main'}">
+					<a href="/analysts/{{ analyst.username }}">
+						<h3 class="m0">Main</h3>
+					</a>
+				</div>
+				<div class="col-xs-2 br cursor_pointer" ng-class="{'selected': $root.profile_section == 'rulesets'}">
+					<a href="/analysts/{{ analyst.username }}/rulesets">
+						<h3 class="m0" ng-bind="analyst.total_public_rulesets"></h3>
+						<p class="m0">
+							<span>Yara Rulesets</span>
+						</p>
+					</a>
+				</div>
+				<div class="col-xs-2 br cursor_pointer" ng-class="{'selected': $root.profile_section == 'comments'}">
+					<a href="/analysts/{{ analyst.username }}/comments">
+						<h3 class="m0" ng-bind="analyst.total_comments"></h3>
+						<p class="m0">Comments</p>
+					</a>
+				</div>
+				<div class="col-xs-2 br cursor_pointer" ng-class="{'selected': $root.profile_section == 'following'}">
+					<a href="/analysts/{{ analyst.username }}/following">
+						<h3 class="m0" ng-bind="analyst.total_following"></h3>
+						<p class="m0">Following</p>
+					</a>
+				</div>
+				<div class="col-xs-2 br cursor_pointer" ng-class="{'selected': $root.profile_section == 'followers'}">
+					<a href="/analysts/{{ analyst.username }}/followers">
+						<h3 class="m0" ng-bind="analyst.total_followers"></h3>
+						<p class="m0">Followers</p>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<ui-view></ui-view>
+</div>

@@ -1,0 +1,71 @@
+<style>
+    .modal-dialog{
+        width:100%;
+        margin:0;
+        color: #2c2d30;
+        height: 100%;
+        overflow: hidden;
+    }
+    .modal-content{
+        border:0;
+        box-shadow: none;
+        height: 100%;
+    }
+    label {
+        font-weight: 700;
+        margin: 0 0 10px;
+        display: block;
+        font-size: 20px;
+        line-height: 1.5rem;
+    }
+    .help-block{
+        font-size:14px;
+    }
+</style>
+
+<a class="fs_modal_btn" ng-click="close(true)">
+    <img src="assets/img/times.png">
+</a>
+<div id="fs_modal_header">
+    <h3>Sign in</h3>
+    <div class="clearfix"></div>
+</div>
+
+<div class="contents_container">
+    <div class="row" style="width:100%">
+        <div class="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2">
+            <form ng-submit="submit()">
+                <div class="alert alert-danger" ng-show="error">
+                    {{ error_message }}
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input class="form-control input-lg" type="text" placeholder="Username" ng-model="username" autofocus>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input class="form-control input-lg" type="password" placeholder="******" ng-model="password">
+                    <button type="submit" class="hide"></button>
+                </div>
+
+                <div class="checkbox mt-xl">
+                    <label class="pull-left">
+                        <input type="checkbox" ng-model="remember" required> Remember me
+                    </label>
+
+                    <label class="pull-right">
+                        <a href="/forgot_password">I forgot my password</a>
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="fs_modal_footer">
+    <div class="pull-right">
+        <button class="btn btn-default btn-lg mr" ng-click="close(true)">Cancel</button>
+        <button class="btn btn-success btn-lg" ng-click="submit()">Log in</button>
+    </div>
+</div>

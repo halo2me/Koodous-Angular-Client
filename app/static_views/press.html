@@ -1,0 +1,51 @@
+<style>
+	.panel-body a:hover{
+		text-decoration: none;
+	}
+	.panel-body:hover{
+		opacity: 0.9;
+	}
+</style>
+
+<div class="container">
+    <!-- Koodous Press --> 
+    <div class="row">
+        <div class="col-lg-12 text-center mb-xl mt0 page-header">
+            <h1>Koodous Press</h1>
+            <p class="lead">Here are some publications in the media about us.</p>
+        </div>
+        <div class="clearfix"></div>        
+    </div>
+    <div class="row">
+        <div class="col-lg-4" ng-repeat="new in press">
+            <!-- START panel-->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                	<a href="{{ new.link }}" target="_blank">
+                		<div style="height: 300px; background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url('{{ new.image  }}') center center no-repeat" class="panel-body text-center bg-center">
+	                        <div class="row row-table">
+	                            <div class="col-xs-12 text-white">
+	                                <img src="{{ new.media_logo }}" alt="Image" class="img-thumbnail img-rounded thumb64 mt-xl">
+	                                <h3 class="mt-lg m0">{{ new.title }}</h3>
+	                            </div>
+	                        </div>
+	                    </div>
+                	</a>
+                </div>
+                <div class="panel-footer">{{ new.date | date }}</div>
+            </div>
+            <!-- END panel-->
+        </div>
+    </div>
+    <!-- END Koodous Press --> 
+    <!-- Brand assets --> 
+    <div class="row">
+        <div class="col-lg-12 text-center mb-xl mt-xl">
+            <h1>Brand Assets</h1>
+            <p class="lead">We've created some resources to help you use our brand and assets.</p>
+            <a href="https://koodous.github.io/brand-assets/" class="btn btn-primary btn-lg" target="_blank">Go to brand guidelines</a>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- END Brand assets --> 
+</div>

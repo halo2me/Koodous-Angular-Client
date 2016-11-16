@@ -1,0 +1,88 @@
+<h1>Notifications</h1>
+<h3 style="padding:0;" class="ng-scope"></h3>
+<div class="row">
+	<div class="col-lg-6 col-md-8">
+		<form ng-submit="updateSettings()">
+			<h3 style="border:0;">
+				Web notifications
+			</h3>
+
+			<label>Notify me when</label>
+		
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.web_analisys_completed"> A requested analysis is completed
+				</label>
+			</div>
+
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.web_vote_against"> An user votes the opposite than me
+				</label>
+			</div>
+
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.web_ruleset_match"> A non silenced ruleset matches an apk
+				</label>
+			</div>
+
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.web_user_commented"> An user comment where I commented before.
+				</label>
+			</div>
+
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.web_user_follow"> An user starts following me.
+				</label>
+			</div>
+
+			<div class="clearfix"></div>
+
+			<h3 style="border:0;">Email notifications</h3>
+
+			<label>Send me an email when</label>
+
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.email_analisys_completed"> A requested analysis is completed
+				</label>
+			</div>
+
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.email_vote_against"> An user votes the opposite than me
+				</label>
+			</div>
+
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.email_ruleset_match"> A non silenced ruleset matches an apk
+				</label>
+			</div>
+
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.email_user_commented"> An user comment where I commented before.
+				</label>
+			</div>
+
+			<div class="checkbox mt0">
+				<label>
+					<input type="checkbox" ng-model="settings.email_user_follow"> An user starts following me.
+				</label>
+			</div>
+
+			<div class="clearfix"></div>
+			
+			<uib-alert type="success" class="col-md-6 mt" ng-show="successAlert" close="closeAlert()">Settings update correctly</uib-alert>
+			
+			<div class="clearfix"></div>
+
+			<button type="submit" class="btn btn-info mt">Save your settings</button>
+			
+		</form>
+	</div>
+</div>

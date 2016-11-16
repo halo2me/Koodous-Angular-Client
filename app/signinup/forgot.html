@@ -1,0 +1,62 @@
+<style>
+    .modal-dialog{
+        width:100%;
+        margin:0;
+        color: #2c2d30;
+        height: 100%;
+        overflow: hidden;
+    }
+    .modal-content{
+        border:0;
+        box-shadow: none;
+        height: 100%;
+    }
+    label {
+        font-weight: 700;
+        margin: 0 0 10px;
+        display: block;
+        font-size: 20px;
+        line-height: 1.5rem;
+    }
+    .help-block{
+        font-size:14px;
+    }
+</style>
+
+<a class="fs_modal_btn" ng-click="close(true)">
+    <img src="assets/img/times.png">
+</a>
+<div id="fs_modal_header">
+    <h3>I forgot my password</h3>
+    <div class="clearfix"></div>
+</div>
+
+<div class="contents_container">
+    <div class="row" style="width:100%">
+        <div class="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2 mt-xl">
+            <form ng-submit="submit()">
+                <div class="alert alert-danger" ng-show="error">
+                    {{ error_message }}
+                </div>
+                <div class="alert alert-success" ng-show="done">
+                    <strong>Check your email</strong>. We have sent you an email with the instructions to reset your password. (You can close this dialog now).
+                </div>
+                <div class="form-group">
+                    <label>Enter you email</label>
+                    <input class="form-control input-lg" type="email" placeholder="youremail@domain.com" ng-model="email">
+                    <button type="submit" class="hide"></button>
+                    <p class="help-block">
+                        We will send you an email with the instructions to reset your password.
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="fs_modal_footer">
+    <div class="pull-right">
+        <button class="btn btn-default btn-lg mr" ng-click="close(true)" ng-hide="registration_done">Cancel</button>
+        <button class="btn btn-success btn-lg" ng-click="submit()" ng-hide="registration_done">Send me an email</button>
+    </div>
+</div>

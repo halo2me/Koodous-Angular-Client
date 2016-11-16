@@ -1,0 +1,12 @@
+<div class="comment" style="margin-bottom: 20px;">
+	<div class="comment-body alert alert-info" style="margin-bottom:0;">
+		<strong>#{{ $index+1 }}</strong> {{ comment.text }}
+	</div>
+	<div class="comment-details">
+		<div class="pull-right">
+			{{ comment.created_on*1000 | date:'medium' }} -
+			<a href="#">{{ comment.author.username }}</a>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>

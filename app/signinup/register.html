@@ -1,0 +1,83 @@
+<style>
+    .modal-dialog{
+        width:100%;
+        margin:0;
+        color: #2c2d30;
+        height: 100%;
+        overflow: hidden;
+    }
+    .modal-content{
+        border:0;
+        box-shadow: none;
+        height: 100%;
+    }
+    label {
+        font-weight: 700;
+        margin: 0 0 10px;
+        display: block;
+        font-size: 20px;
+        line-height: 1.5rem;
+    }
+    .help-block{
+        font-size:14px;
+    }
+</style>
+
+<a class="fs_modal_btn" ng-click="close(true)">
+    <img src="assets/img/times.png">
+</a>
+<div id="fs_modal_header">
+    <h3>Create your account</h3>
+    <div class="clearfix"></div>
+</div>
+
+<div class="contents_container">
+    <div class="row" style="width:100%">
+        <div class="col-lg-4 col-lg-offset-4 col-md-8 col-md-offset-2">
+            <div class="alert alert-danger" ng-show="error">
+                {{ error_message }}
+            </div>
+            <div class="alert alert-success" ng-show="registration_done">
+                <strong>Your account has been created</strong>. Check your email inbox ({{ user.email }}) and the follow the instructions to activate your account.
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <input class="form-control input-lg" type="text" placeholder="Username" ng-model="user.username">
+                <p class="help-block">
+                    Only characters allowed
+                </p>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input class="form-control input-lg" type="email" placeholder="youremail@domain.com" ng-model="user.email">
+                <p class="help-block">
+                    We will send you an activation email
+                </p>
+            </div>  
+
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-control input-lg" type="password" placeholder="******" ng-model="user.password">
+            </div>
+
+            <div class="form-group">
+                <label>Your password again</label>
+                <input class="form-control input-lg" type="password" placeholder="******" ng-model="password2">
+            </div>
+
+            <div class="checkbox mt-xl">
+                <label>
+                    <input type="checkbox" ng-model="terms_accepted" required> I agree with the <a href="/terms" ng-click="close()">terms of use & private policy</a>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="fs_modal_footer">
+    <div class="pull-right">
+        <button class="btn btn-default btn-lg mr" ng-click="close(true)" ng-hide="registration_done">Cancel</button>
+        <button class="btn btn-success btn-lg" ng-click="register()" ng-hide="registration_done">Create your account</button>
+    </div>
+</div>

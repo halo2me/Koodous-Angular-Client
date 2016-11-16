@@ -1,0 +1,104 @@
+<div ng-show="apk" class="col-lg-4 col-md-6" style="position:absolute;margin-left: auto;margin-right: auto;left: 0;right: 0; z-index:100">
+	<uib-alert type="success" close="analysisRequested=false;" ng-show="analysisRequested">Analysis request has been sent. The report generation can take several minutes. You will get a notification after it finishes.</uib-alert>
+	<uib-alert type="danger" close="analysisRequestedFailed=false;" ng-show="analysisRequestedFailed">There was an error sending the analysis request.</uib-alert>
+
+	<uib-alert type="warning" close="detectedAlert = false" ng-show="$root.user.is_superuser && apk.detected && detectedAlert" ng-init="detectedAlert = true">
+		<div class="text-center">
+			<strong>ADMINS</strong> - This APK has been detected by our community
+		</div>
+		
+		<div class="text-center">
+			<button class="btn btn-default btn-xs" ng-click="setAPKAsTrusted(apk)">
+				<i class="fa fa-check"></i>
+				Mark as trusted
+			</button>
+		</div>
+	</uib-alert>
+</div>
+
+<div class="row" ng-show="apk">
+	<div class="col-lg-12">
+		<div class="row">
+			<div class="pull-left ml-xl mr-xl apk-rating" ng-controller="APKRatingCtrl">
+				<div style="text-align:center; font-size: 35px;">
+					<div style="min-height:20px">
+						<a ng-hide="userVoted || $root.user.anon" href="" ng-click="voteUp()" class="text-muted fa fa-thumbs-up"></a>
+						<i ng-hide="!userVoted || $root.user.anon" class="fa fa-thumbs-up" ng-class="{'text-success':userVote.kind == 'positive', 'text-muted':userVote.kind != 'positive'}"></i>
+					</div>
+					<div ng-class="{'text-success': apk.rating > 0, 'text-danger': apk.rating < 0}">
+						<strong ng-bind="apk.rating"></strong>
+					</div>
+					<div ng-hide="$root.user.anon">
+						<a ng-hide="userVoted || $root.user.anon" href="" ng-click="voteDown()" class="text-muted fa fa-thumbs-down"></a>
+						<i ng-hide="!userVoted || $root.user.anon" class="fa fa-thumbs-down" ng-class="{'text-danger':userVote.kind == 'negative', 'text-muted':userVote.kind != 'negative'}"></i>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+			</div>
+
+			<div class="pull-left mt-lg mr-lg">
+				<div class="mb-sm">
+					<img src="assets/img/dummy.png" alt="" class="media-object img-responsive img-rounded thumb64" ng-hide="apk.image">
+					<img ng-src="{{ apk.image }}" alt="" class="media-object img-responsive img-rounded thumb64" ng-show="apk.image">
+				</div>
+				<button ng-click="download()" ng-hide="$root.user.anon" class="btn btn-info btn-block btn-xs">Download</button>
+				<button ng-click="analyze()"  ng-hide="$root.user.anon" class="btn btn-success btn-block btn-xs" ng-disabled="analyzing">
+					<span ng-hide="apk.analyzed" ng-if="!analyzing">Analyze</span>
+					<span ng-show="apk.analyzed" ng-if="!analyzing">Reanalyze</span>
+					<span ng-show="analyzing">...</span>
+				</button>
+			</div>
+
+			<div class="pull-left">
+				<h2>
+					{{ apk.app || "Unknown app name" }} 
+					
+					<small style="font-size:16px;">
+						<span class="label label-success ml" ng-show="apk.trusted && $root.user.is_superuser">
+							Trusted
+						</span>
+						<span class="label label-danger ml" ng-show="apk.corrupted">Corrupted</span>
+						<a href="/apks?search=tag:{{tag}}" class="label label-info ml" ng-repeat="tag in apk.tags">{{ tag }}</a>
+					</small>
+					<br>
+					<small>
+						{{ apk.package_name || "" }}
+						<span ng-show="apk.repo == 'googleplay'">
+								( <a ng-href="http://play.google.com/store/apps/details?id={{ apk.package_name }}" alt="Google Play Page" class="ml-sm" target="_blank">
+								<i class="fa fa-external-link"></i>
+								Google Play
+							</a> )
+						</span>
+					</small>
+				</h2>
+				<a class="label label-primary" href="/apks?search=installed:true" ng-show="apk.on_devices">
+					<i class="fa fa-mobile"></i>
+					&nbsp;
+					Installed on devices
+				</a>
+			</div>
+		</div>
+		
+		<div class="panel mt-xl">
+			<ul class="nav nav-tabs nav-justified">
+				<li ng-class="{'active': subsection == 'main'}">
+					<a href="/apks/{{ apk.sha256 }}">General Info</a>
+				</li>
+				<li ng-class="{'active': subsection == 'comments'}">
+					<a href="/apks/{{ apk.sha256 }}/comments">
+						Comments
+						<span class="label label-info" ng-show="totalComments">{{ totalComments }}</span>
+					</a>
+				</li>
+				<li ng-class="{'active': subsection == 'analysis'}" ng-show="apk.analyzed">
+					<a href="/apks/{{ apk.sha256 }}/analysis">Analysis report</a>
+				</li>
+				<li ng-class="{'active': subsection == 'metadata'}" ng-show="apk.repo == 'googleplay'">
+					<a href="/apks/{{ apk.sha256 }}/metadata">Metadata</a>
+				</li>
+			</ul>
+
+			<div ui-view class="p-lg"></div>
+		</div>
+	</div>
+</div>

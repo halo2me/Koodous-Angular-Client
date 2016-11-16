@@ -1,0 +1,196 @@
+<style>
+    body{
+        overflow-y: hidden !important;
+    }
+    .modal-dialog{
+        width:100%;
+        margin:0;
+        color: #2c2d30;
+        height: 100%;
+        overflow-y: hidden;
+    }
+    .modal-content{
+        border:0;
+        box-shadow: none;
+        height: 100%;
+    }
+    label {
+        font-weight: 700;
+        margin: 0 0 10px;
+        display: block;
+        font-size: 20px;
+        line-height: 1.5rem;
+    }
+    .help-block{
+        font-size:14px;
+    }
+    .uploader-box{
+        border: 2px solid #dde6e9;
+    }
+    .uploader-box > button{
+        font-weight: bolder;
+        padding: 15px 50px;
+    }
+    .inactive{
+        opacity: 0.2;
+        color: #909fa7;
+    }
+    .loading{
+        opacity: 0.2
+    }
+    .text-placeholder100{
+        width: 300px;
+        display: block;
+        color: #e4eaec !important;
+    }
+    .text-placeholder80{
+        width: 260px;
+        display: block;
+        color: #e4eaec !important;
+    }
+    .text-placeholder50{
+        width: 180px;
+        display: block;
+        color: #e4eaec !important;
+    }
+    .text-placeholder30{
+        width: 140px;
+        display: block;
+        color: #e4eaec !important;
+    }
+</style>
+
+<a class="fs_modal_btn" ng-click="close(true)">
+    <img src="assets/img/times.png">
+</a>
+<div id="fs_modal_header">
+    <h3>APK Uploader</h3>
+    <div class="clearfix"></div>
+</div>
+
+<div class="contents_container">
+    <div class="row" style="width:100%">
+        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
+
+            <!-- Initial step -->
+            <div class="text-center text-muted" ng-show="currentStep == 1" ngf-drop ng-model="file" ng-file-change="upload(file)">
+                <div class="alert alert-danger ml-xl mr-xl" ng-show="uploadError">
+                    <strong>Error!</strong> {{ uploadError }}
+                </div>
+                
+                <div class="clearfix"></div>
+                
+                <i class="fa text-info" ng-class="{'fa-cloud-upload':!checking_file, 'fa-spin fa-spinner':checking_file}" style="font-size: 300px;"></i>
+                <div class="clearfix"></div>
+                <div ng-hide="checking_file">
+                    <button class="btn btn-default btn-lg" style="padding: 10px 50px; font-weight:900; font-size: 20px;" ng-file-select ng-model="file" ng-file-change="upload(file)">Browse</button>
+                    <div>
+                        <p class="mt-lg">Select the APK you want to upload</p>
+                    </div>
+                </div>
+            </div>
+            <!-- End of Initial step -->
+
+            <!-- Uploading -->
+            <div class="well well-lg text-muted uploader-box" ng-show="currentStep == 2 || currentStep == 3">
+                
+                <div class="alert alert-info text-center" ng-show="currentStep == 2">
+                    Uploading APK
+                </div>
+
+                <uib-progressbar ng-show="currentStep == 2" class="progress-striped active mt-xl" value="uploadProgress" type="'success'">{{ uploadProgress }}%</uib-progressbar>
+
+                <div class="alert alert-info text-center" ng-show="currentStep == 3 && (gettingAPKInfo || !apk.analyzed)">
+                    <span ng-show="gettingAPKInfo">Getting APK info</span>
+                    <span ng-show="!apk.analyzed && !gettingAPKInfo">Analyzing APK. It may take up to 5 minutes...</span>
+                </div>
+
+                <img alt="" class="bg-gray-light media-object img-responsive img-rounded thumb128 pull-left" ng-src="{{ apk.image }}">
+                <div class="pull-left ml-lg">
+                    <h3 class="mt" ng-class="{'text-placeholder50 bg-gray-light':gettingAPKInfo}">{{ apk.app }}&nbsp;</h3>
+                    <h4 class="mt" ng-class="{'text-placeholder30 bg-gray-light':gettingAPKInfo}">{{ apk.package_name }}&nbsp;</h4>
+                    <h5 ng-class="{'text-placeholder100 bg-gray-light':gettingAPKInfo}">{{ apk.sha256 }}&nbsp;</h5>
+                    <h5 ng-class="{'text-placeholder30 bg-gray-light':gettingAPKInfo}">{{ apk.size|bytes }}&nbsp;</h5>
+                    <div class="clearfix"></div>
+                </div>
+                
+                <div class="clearfix"></div>
+
+                <div class="row summary mt-xl p">
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="row">
+                            <div class="col-xs-4 text-center">
+                                <span class="fa-stack fa-lg" ng-class="{'inactive':!apk.analyzed, 'text-muted':(apk.analyzed && expertDetections.length == 0), 'text-danger':(apk.analyzed && expertDetections.length > 0 )}" style="font-size: 50px;">
+                                    <i class="fa fa-square-o fa-stack-2x"></i>
+                                    <i class="fa fa-stack-1x" ng-class="{'fa-bug':apk.analyzed, 'fa-circle-o-notch fa-spin':!apk.analyzed}"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <span class="fa-stack fa-lg" ng-class="{'inactive':!apk.analyzed, 'text-muted':(apk.analyzed && socialDetections.length == 0), 'text-danger':(apk.analyzed && socialDetections.length > 0 )}" style="font-size: 50px;">
+                                    <i class="fa fa-square-o fa-stack-2x"></i>
+                                    <i class="fa fa-stack-1x"  ng-class="{'fa-exclamation-triangle':apk.analyzed, 'fa-circle-o-notch fa-spin':!apk.analyzed}"></i>
+                                </span>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <span class="fa-stack fa-lg" ng-class="{'inactive':!apk.analyzed, 'text-success':apk.rating > 0, 'text-danger':apk.rating < 0}" style="font-size: 50px;">
+                                    <i class="fa fa-square-o fa-stack-2x"></i>
+                                    <b ng-show="apk.analyzed">{{ apk.rating }}</b>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-xl analysis" ng-show="apk.analyzed && !gettingExpertDetections && !gettingSocialDetections">
+                    <div class="col-md-6">
+                        <div class="alert mr-xl" ng-class="{'alert-danger': expertDetections.length + socialDetections.length > 0, 'alert-info':expertDetections.length + socialDetections.length == 0}" ng-show="!gettingExpertDetections">Detected by {{ expertDetections.length + socialDetections.length }} analysts</div>
+                        <div class="mt" ng-repeat="row in expertDetections" ng-show="!gettingExpertDetections && !gettingSocialDetections">
+                            <img ng-src="{{ row.avatar_url }}" alt="Image" class="img-rounded thumb48 pull-left">
+                            <h3 class="text-muted pull-left mt ml">
+                                <a href="/rulesets/{{ ruleset.id }}" ng-repeat="ruleset in row.rulesets" target="_blank">{{ ruleset.name }} </a>
+                            </h3>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="mt" ng-repeat="row in socialDetections" ng-show="!gettingExpertDetections && !gettingSocialDetections">
+                            <img ng-src="{{ row.analyst.avatar_url }}" alt="Image" class="img-rounded thumb48 pull-left">
+                            <h3 class="text-muted pull-left mt ml">
+                                <a href="/rulesets/{{ row.id }}">{{ row.name }}</a>
+                            </h3>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="alert mr-xl alert-info" ng-show="!gettingExpertDetections">There is {{ votesData.count }} vote/s for this sample</div>
+
+                        <div class="row">
+                            <div class="col-md-3" ng-repeat="vote in votesData.results">
+                                <a href="/analysts/{{ vote.analyst }}">
+                                    <img ng-src="{{ vote.avatar_url }}" alt="Image" class="img-rounded thumb64" ng-class="{'negative-vote': vote.kind == 'negative', 'positive-vote': vote.kind == 'positive'}">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="apk.analyzed">
+                    <hr>
+
+                    <h4 class="text-center">
+                        What do you think?
+                    </h4>
+                    <h5 class="text-center">Vote and comment in the detail view</h5>
+
+                    <button class="btn btn-info btn-lg center-block" type="button" ng-click="detail_apk()">Take me to detail view</button>
+                </div>
+            </div>
+            <!-- End of Uploading -->
+        </div>
+    </div>
+</div>
+
+<div id="fs_modal_footer hide">
+    <div class="pull-right">
+        <button class="btn btn-default btn-lg mr" ng-click="close(true)" ng-hide="registration_done">Close</button>
+    </div>
+</div>

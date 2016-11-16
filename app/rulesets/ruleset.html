@@ -1,0 +1,66 @@
+<div class="p" style="background-color: #fafbfc;border-bottom: 1px solid #cfdbe2;margin:-20px -20px 0px -20px" ng-show="ruleset">
+	<div class="pull-left ml-xl mr-xl apk-rating">
+		<div style="text-align:center; font-size: 35px;">
+			<div style="min-height:45px">
+				<a ng-hide="userVoted || $root.user.anon" href="" ng-click="voteUp()" class="text-muted fa fa-thumbs-up"></a>
+				<i ng-show="userVoted" class="fa fa-thumbs-up" ng-class="{'text-success':userVote.kind == 'positive', 'text-muted':userVote.kind != 'positive'}"></i>
+			</div>
+			<div ng-class="{'text-success': ruleset.rating > 0, 'text-danger': ruleset.rating < 0}">
+				<strong ng-bind="ruleset.rating || 0"></strong>
+			</div>
+			<div>
+				<a ng-hide="userVoted || $root.user.anon" href="" ng-click="voteDown()" class="text-muted fa fa-thumbs-down"></a>
+				<i ng-show="userVoted" class="fa fa-thumbs-down" ng-class="{'text-danger':userVote.kind == 'negative', 'text-muted':userVote.kind != 'negative'}"></i>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="col">
+		<h2>
+			{{ ruleset.name }}
+			<small ng-show="$root.user.username == ruleset.analyst.username">
+				&nbsp;
+				(
+				<a href="/my_rulesets/{{ ruleset.id }}">
+					<i class="fa fa-pencil"></i>
+					Edit your ruleset
+				</a>
+				)
+			</small>
+			
+			<small class="text-muted">
+				<br>
+
+				<a href="/analysts/{{ ruleset.analyst.username }}">
+					<img ng-src="{{ ruleset.analyst.avatar_url }}" alt="Avatar" class="img-circle" style="height:20px; width:20px;">
+				</a>
+				<span class="pl-sm">
+					Authored & modified by <a href="/analysts/{{ ruleset.analyst.username }}">{{ ruleset.analyst.username }}</a> <span am-time-ago="ruleset.modified_on*1000" title="{{ ruleset.modified_on*1000 | date:'medium' }}"></span>
+				</span>
+
+				<br>
+
+				<span class="label label-success" ng-show="ruleset.active" style="font-size:12px;">Active</span>
+				<span class="label label-danger ng-hide" ng-hide="ruleset.active" style="font-size:12px;">Disabled</span>
+				<span class="label label-info" ng-show="ruleset.social" style="font-size:12px;">SOCIAL</span>
+				<span class="label bg-gray-darker ng-hide" ng-show="ruleset.privacy == 'private'" style="font-size:12px;">Private</span>
+			</small>
+		</h2>
+	</div>
+	<div class="clearfix"></div>
+</div>
+
+<div class="row" ng-show="ruleset">
+	<div class="text-center" style="margin: 0px -5px; border-bottom: 1px solid #cfdbe2; padding: 10px">
+		<ul class="nav nav-pills" style="display:inline-block">
+			<li ng-class="{'active': subSection == 'main'}">
+				<a href="/rulesets/{{ ruleset.id }}">Code & comments</a>
+			</li>
+			<li ng-class="{'active': subSection == 'detections'}">
+				<a href="/rulesets/{{ ruleset.id }}/detections">Detections ({{ ruleset.detections }})</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<ui-view></ui-view>
