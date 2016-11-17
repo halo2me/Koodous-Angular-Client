@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:/compiled/
+Disallow:/assets/
+Disallow:/app/
