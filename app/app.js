@@ -455,70 +455,70 @@ app.controller('StaticViewController', ["$scope", function($scope){
             link:"http://www.toolswatch.org/2016/09/the-black-hat-arsenal-europe-2016-line-up/#koodous",
             image:"http://www.toolswatch.org/wp-content/uploads/2016/07/bh16europe_logo_black_updated2.png",
             date:new Date(2016,8,14),
-            media_logo: "https://pbs.twimg.com/profile_images/769174492262391808/CwGJmdhh_400x400.jpg",
+            media_logo: "/assets/img/blackhat.jpg",
         },
         {
             title:"Koodous: VirusTotal (antivirus social) para Android",
             link:"http://blog.elhacker.net/2016/09/koodous-virustotal-antivirus-social-para-android.html",
             image:"https://4.bp.blogspot.com/-JhUlSkhGJlk/V852vcIOqjI/AAAAAAAAiTs/1XJluMFTh8kg1JW8P8rlgACDAHYUfxLLwCLcB/s200/unnamed.png",
             date: new Date(2016,8,6),
-            media_logo: "https://pbs.twimg.com/profile_images/1330969532/e-peq1_400x400.png"
+            media_logo: "/assets/img/elhacker.png",
         },
         {
             title:"Una 'app' hecha en Málaga implica a expertos de todo el mundo para buscar virus en los móviles",
             link:"http://www.diariosur.es/tecnologia/empresas/201609/03/hecha-malaga-implica-expertos-20160903203659.html",
             image:"http://www.diariosur.es/noticias/201609/03/media/cortadas/hispaseCo0A5_QUAAEgLEv-k7KI-U202680318564uzH-575x323@Diario%20Sur.jpg",
             date: new Date(2016,8,4),
-            media_logo: "https://pbs.twimg.com/profile_images/740316941366222848/SZ_mL0XZ.jpg"
+            media_logo: "/assets/img/diariosur.jpg",
         },
         {
             title:"Koodous es un antivirus que crece gracias a la comunidad",
             link:"http://www.xatakandroid.com/aplicaciones-android/koodous-es-un-antivirus-que-crece-gracias-a-la-comunidad",
             image:"http://i.blogs.es/12871b/koodous-trio/1366_2000.jpg",
             date:new Date(2016,7,18),
-            media_logo: "https://pbs.twimg.com/profile_images/460728038733258754/H4-nTceO_400x400.jpeg",
+            media_logo: "/assets/img/xatakaandroid.jpeg",
         },
         {
             title:"Koodous, el antivirus social hecho entre todos",
             link:"http://tecnologia.elpais.com/tecnologia/2016/08/12/actualidad/1470986862_544707.html",
             image:"http://ep01.epimg.net/tecnologia/imagenes/2016/08/12/actualidad/1470986862_544707_1470989327_noticia_normal_recorte1.jpg",
             date:new Date(2016,7,18),
-            media_logo: "http://ep00.epimg.net/iconos/v1.x/v1.0/promos/promo_og_elpais.png",
+            media_logo: "/assets/img/elpais.png",
         },
         {
             title:"Koodous presente en BlackHat USA Las Vegas 2016",
             link:"http://unaaldia.hispasec.com/2016/08/koodous-presente-en-blackhat-usa-las.html",
             image:"https://3.bp.blogspot.com/-FGgOXL2HNJU/V6EgRb77NxI/AAAAAAAAHhE/q0L7PrRLFxYjvxFGNjdvv-8uCDyDYROsACLcB/s1600/blackhat2016.jpeg",
             date: new Date(2016,7,3),
-            media_logo: "https://pbs.twimg.com/profile_images/2784430190/016214ce6d462eb23e3195d0c69da853_400x400.png"
+            media_logo: "/assets/img/uad.png",
         },
         {
             title:"Clientes del BBVA, Santander y Ruralvía, en peligro por un virus en móviles Android",
             link:"http://www.elconfidencial.com/tecnologia/2016-03-13/clientes-del-bbva-santander-y-ruralvia-en-peligro-por-un-virus-en-moviles-android_1167402/",
             image:"http://9www.ecestaticos.com/imagestatic/clipping/dda/bc9/4f8/ddabc94f8ea79f24d32bb48cf9d1df9a/clientes-del-bbva-santander-y-ruralvia-en-peligro-por-un-virus-en-moviles-android.jpg?mtime=1457719422",
             date: new Date(2016,2,13),
-            media_logo: "https://pbs.twimg.com/profile_images/686938796856860673/PEmS0vTR_400x400.png"
+            media_logo: "/assets/img/elconfidencial.png",
         },
         {
             title:"Repaso al 2015. Koodous awakens :)",
             link:"http://unaaldia.hispasec.com/2016/01/repaso-al-2015-koodous-awakens.html",
             image:"http://4.bp.blogspot.com/-9cGFulpUrlo/Vo6ypxQ2wSI/AAAAAAAAFwU/QnJSv5rBYQM/s1600/Koodous_strings.png",
             date: new Date(2016,0,8),
-            media_logo: "https://pbs.twimg.com/profile_images/2784430190/016214ce6d462eb23e3195d0c69da853_400x400.png"
+            media_logo: "/assets/img/uad.png",
         },
         {
             title:"Koodous alcanza el millón de aplicaciones Android fraudulentas detectadas",
             link:"http://unaaldia.hispasec.com/2015/10/koodous-alcanza-el-millon-de.html",
             image:"http://4.bp.blogspot.com/-iZ0oxogoPWE/Vh5jppPm_wI/AAAAAAAAE7A/i5fPBHbQMiQ/s1600/Koodous_1.png",
             date: new Date(2015,9,14),
-            media_logo: "https://pbs.twimg.com/profile_images/2784430190/016214ce6d462eb23e3195d0c69da853_400x400.png"
+            media_logo: "/assets/img/uad.png",
         },
         {
             title:"Koodous: inteligencia colectiva para proteger tu Android",
             link:"http://unaaldia.hispasec.com/2015/07/koodous-inteligencia-colectiva-para.html",
             image:"http://3.bp.blogspot.com/-UAc_TY1HrnE/VYvlCYEcsdI/AAAAAAAAD4c/J8wHv2u47eA/s640/diagram-koodous.png",
             date: new Date(2015,6,6),
-            media_logo: "https://pbs.twimg.com/profile_images/2784430190/016214ce6d462eb23e3195d0c69da853_400x400.png"
+            media_logo: "/assets/img/uad.png",
         }
     ];
 }]);
