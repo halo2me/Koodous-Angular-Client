@@ -8,7 +8,9 @@
 		<div class="row hidden-xs hidden-sm" style="height:350px;position:relative;">
 			<div class="col-lg-2 col-lg-offset-3 text-center p" style="position:absolute;bottom:0;">
 				<a href="/analysts/{{ secondUser.username }}">
-					<img ng-src="{{ secondUser.avatar_url }}" class="img-thumbnail img-circle" style="width: 70%; margin:auto;">
+					<img ng-src="{{ secondUser.avatar_url }}" class="img-thumbnail img-circle" style="width: 70%; margin:auto;" ng-show="secondUser.avatar_url">
+
+					<img src="/assets/img/default_avatar.png" class="img-thumbnail img-circle" style="width: 70%; margin:auto;" ng-hide="secondUser.avatar_url">
 					<h3>
 						{{ secondUser.username }}
 					</h3>
@@ -17,14 +19,18 @@
 
 			<div class="col-lg-2 col-lg-offset-5 text-center p" style="position:absolute;bottom:0;">
 				<a href="/analysts/{{ firstUser.username }}">
-					<img ng-src="{{ firstUser.avatar_url }}" class="img-thumbnail img-circle" style="width: 100%; margin:auto;">
+					<img ng-src="{{ firstUser.avatar_url }}" class="img-thumbnail img-circle" style="width: 70%; margin:auto;" ng-show="firstUser.avatar_url">
+
+					<img src="/assets/img/default_avatar.png" class="img-thumbnail img-circle" style="width: 70%; margin:auto;" ng-hide="firstUser.avatar_url">
 					<h3>{{ firstUser.username }}</h3>
 				</a>
 			</div>
 			
 			<div class="col-lg-1 col-lg-offset-7 text-center p" style="position:absolute;bottom:0;">
 				<a href="/analysts/{{ thirdUser.username }}">
-					<img ng-src="{{ thirdUser.avatar_url }}" class="img-thumbnail img-circle" style="width: 70%; margin:auto;">
+					<img ng-src="{{ thirdUser.avatar_url }}" class="img-thumbnail img-circle" style="width: 70%; margin:auto;" ng-show="thirdUser.avatar_url">
+
+					<img src="/assets/img/default_avatar.png" class="img-thumbnail img-circle" style="width: 70%; margin:auto;" ng-hide="thirdUser.avatar_url">
 					<h3>{{ thirdUser.username }}</h3>
 				</a>
 			</div>
@@ -56,7 +62,9 @@
 								<tr ng-repeat="analyst in analysts">
 									<td>
 										<div class="media">
-											<img ng-src="{{ analyst.avatar_url }}" alt="Image" class="img-responsive img-circle">
+											<img ng-src="{{ analyst.avatar_url }}" alt="Image" class="img-responsive img-circle" ng-show="analyst.avatar_url">
+
+											<img src="/assets/img/default_avatar.png" alt="Image" class="img-responsive img-circle" ng-hide="analyst.avatar_url">
 										</div>
 									</td>
 									<td><a href="/analysts/{{ analyst.username }}">{{ analyst.username }}</a></td>

@@ -546,7 +546,7 @@ angular.module('services.api', [])
         return request;
     }
     KoodousAPI.updateAPK = function(sha256, data){
-        var url = "/api/apks/" + sha256;
+        var url = KoodousAPI.base_api_url + "/apks/" + sha256;
         var request = $http({
             method: 'PATCH',
             url: url,
@@ -581,7 +581,7 @@ angular.module('services.api', [])
     };
 
     KoodousAPI.updateNotification = function(notification){
-        var url = "/api/notifications/" + notification.id;
+        var url = KoodousAPI.base_api_url + "/notifications/" + notification.id;
         var data = {"read":notification.read};
         var request = $http({
             method: 'PATCH',
@@ -596,7 +596,7 @@ angular.module('services.api', [])
     };
 
     KoodousAPI.markAllNotificationsAsRead = function(){
-        var url = "/api/notifications/mark_all_as_read";
+        var url = KoodousAPI.base_api_url + "/notifications/mark_all_as_read";
         var request = $http({
             method: 'POST',
             url: url,
@@ -828,7 +828,7 @@ angular.module('services.api', [])
     };
 
     KoodousAPI.updateAvatar = function(username, file){
-        var url = "/api/analysts/"+ username;
+        var url = KoodousAPI.base_api_url + "/analysts/"+ username;
         
         var request = $upload.upload({
             url: url,
@@ -841,7 +841,7 @@ angular.module('services.api', [])
     };
 
     KoodousAPI.updateUserInfo = function(user){
-        var url = "/api/analysts/"+ user.username;
+        var url = KoodousAPI.base_api_url + "/analysts/"+ user.username;
         
         var request = $upload.upload({
             url: url,
@@ -853,7 +853,7 @@ angular.module('services.api', [])
     };
 
     KoodousAPI.changeUserPassword = function(user, data){
-        var url = "/api/analysts/"+ user.username + "/set_password";
+        var url = KoodousAPI.base_api_url + "/analysts/"+ user.username + "/set_password";
         var request = $http({
             method: "POST",
             url: url,
