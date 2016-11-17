@@ -9,7 +9,8 @@
                   <!-- User picture-->
                   <div class="user-block-picture">
                      <a href="/analysts/{{ $root.user.username }}" class="user-block-status">
-                        <img ng-src="{{ $root.user.avatar_url }}" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle">
+                        <img ng-src="{{ $root.user.avatar_url }}" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle" ng-show="$root.user.avatar_url">
+                        <img src="/assets/img/default_avatar.png" alt="Avatar" width="60" height="60" class="img-thumbnail img-circle" ng-hide="$root.user.avatar_url">
                      </a>
                   </div>
                   <!-- Name and Job-->
