@@ -206,7 +206,10 @@
 						<tbody>
 							<tr ng-repeat="(key, value) in apk.analysis.androguard.certificate track by $index">
 								<th>{{ key }}</th>
-								<td>{{ value }}</td>
+								<td>
+									<a ng-href="/apks?search=cert:{{ value }}" ng-if="key == 'sha1'">{{ value }}</a>
+									<span ng-if="key != 'sha1'">{{ value }}</span>
+								</td>
 							</tr>
 						</tbody>
 					</table>
