@@ -23,17 +23,8 @@ angular.module('dashboard').controller('DashboardCtrl', ["$scope", "$rootScope",
 
 	//Timeline
 	$scope.getActivity = function(){
-		var dateObj = new Date();
-		dateObj.setDate(dateObj.getDate()-1);
-		var month = dateObj.getUTCMonth() + 1; //months from 1-12
-		var day = dateObj.getUTCDate();
-		var year = dateObj.getUTCFullYear();
-		var hours = dateObj.getUTCHours();
-		var minutes = dateObj.getUTCMinutes();
-		last_day = year + "-" + pad(month, 2) + "-" + pad(day, 2) +"T"+ pad(hours, 2) + ":" + pad(minutes, 2) + ":00";
-
 		//Last 24 hours uploads
-		api.getAPKs(false, {search:"created_on:["+last_day+" TO *]"}).success(function(response){
+		api.getAPKs(false, {search:"created_on:>now-1d"}).success(function(response){
 			$rootScope.last24hApks = response.count;
 		});
 
