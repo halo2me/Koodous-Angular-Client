@@ -5,7 +5,9 @@
 	<div class="list-group-item" ng-repeat="comment in comments">
 		<div class="media">
 			<div class="pull-left">
-				<img ng-src="{{ comment.author.avatar_url }}" alt="Image" class="media-object img-circle thumb32">
+				<img ng-src="{{ comment.author.avatar_url }}" alt="Image" class="media-object img-circle thumb32" ng-show="comment.author.avatar_url">
+
+				<img src="/assets/img/default_avatar.png" alt="Image" class="media-object img-circle thumb32" ng-show="row.analyst.avatar_url">
 			</div>
 			<div class="media-body clearfix" ng-hide="comment.editing">
 				<a href="/analysts/{{ comment.author.username }}" class="media-heading text-primary">{{ comment.author.username }}</a>,
