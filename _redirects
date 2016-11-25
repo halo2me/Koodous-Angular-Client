@@ -1,2 +1,2 @@
-/api/* https://api.koodous.com/:splat 301
+/api/* https://api.koodous.com/:splat 200
 /*    /index.html   200
