@@ -127,14 +127,14 @@ angular.module('my_rulesets').controller('MyRuleSetDetailController', ["$scope",
 	};
 	$scope.openHelpDialog = function(){
 		var modalInstance = $uibModal.open({
-			templateUrl: window.ANGULAR_TEMPLATES_URLS['frontend/app/my_rulesets/about_social_ruleset_dialog.html'],
+			templateUrl: '/app/my_rulesets/about_social_ruleset_dialog.html',
 			controller: 'AboutSocialRulesetDialogController',
 			// size: "lg",
 		});
 	};
 	$scope.openSocialPromotionDialog = function(){
 		var modalInstance = $uibModal.open({
-			templateUrl: window.ANGULAR_TEMPLATES_URLS['frontend/app/my_rulesets/promote_social_dialog.html'],
+			templateUrl: '/app/my_rulesets/promote_social_dialog.html',
 			controller: 'SocialPromotionDialogController',
 			resolve:{
 				scope : function(){
