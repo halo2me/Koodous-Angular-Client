@@ -11,7 +11,7 @@ var app = angular.module('app', [
     'filters',
     'ui.router',
     'angular-loading-bar',
-    'ngAnimate',
+    // 'ngAnimate',
     'angularFileUpload',
     'angularMoment',
     'ui.bootstrap',
