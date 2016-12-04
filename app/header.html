@@ -30,7 +30,8 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="visible-xs" ng-hide="$root.user.anon">
                 <a href="/analysts/{{ $root.user.username }}" class="p0 pr">
-                    <img ng-src="{{ $root.user.avatar_url }}" alt="Avatar" width="40" height="40" class="img-thumbnail img-circle">
+                    <img ng-src="{{ $root.user.avatar_url }}" alt="Avatar" width="40" height="40" class="img-thumbnail img-circle" ng-show="$root.user.avatar_url">
+                    <img ng-src="/assets/img/default_avatar.png" alt="Avatar" width="40" height="40" class="img-thumbnail img-circle" ng-hide="$root.user.avatar_url">
                 </a>
             </li>
 

@@ -4,7 +4,8 @@
 		<a href="{{ getRefLink(comment) }}" class="list-group-item ng-scope mt" ng-repeat="comment in comments">
 			<div class="media">
 				<div class="pull-left">
-					<img ng-src="{{ comment.author.avatar_url }}" alt="Image" class="media-object img-circle thumb32">
+					<img ng-src="{{ comment.author.avatar_url }}" alt="Image" class="media-object img-circle thumb32" ng-show="comment.author.avatar_url">
+					<img ng-src="/assets/img/default_avatar.png" alt="Image" class="media-object img-circle thumb32" ng-hide="comment.author.avatar_url">
 				</div>
 				<div class="media-body clearfix">
 					<small class="pull-right ng-binding">{{ comment.created_on*1000|date:"medium" }}</small>

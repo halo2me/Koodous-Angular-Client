@@ -1,6 +1,7 @@
 <ul class="list-group user-search">
     <li mentio-menu-item="analyst" ng-repeat="analyst in items" class="list-group-item">
-        <img ng-src="{{analyst.avatar_url}}" class="user-photo">
+        <img ng-src="{{analyst.avatar_url}}" class="user-photo" ng-show="analyst.avatar_url">
+        <img ng-src="/assets/img/default_avatar.png" class="user-photo" ng-hide="analyst.avatar_url">
         <span class="text-primary" ng-bind-html="analyst.username | mentioHighlight:typedTerm:'menu-highlighted' | unsafe"></span>
         <em class="text-muted" ng-bind="analyst.bio"></em>
     </li>

@@ -7,7 +7,8 @@
 		<div class="form-group">
 			<label>Profile picture</label>
 			<div class="mt">
-				<img ng-src="{{ $root.user.avatar_url }}" alt="Avatar" class="img-thumbnail img-circle thumb128 pull-left">
+				<img ng-src="{{ $root.user.avatar_url }}" alt="Avatar" class="img-thumbnail img-circle thumb128 pull-left" ng-show="$root.user.avatar_url">
+                <img ng-src="/assets/img/default_avatar.png" alt="Avatar" class="img-thumbnail img-circle thumb128 pull-left" ng-hide="$root.user.avatar_url">
 				<button class="btn btn-info pull-left" ng-class="{'avatar-container': isCurrentUser }" ng-file-select ng-model="avatar" ng-file-change="updateAvatar(avatar)" style="margin: 40px 0 0 60px;">Select profile image</button>
 			</div>
 			<div class="clearfix"></div>
